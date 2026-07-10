@@ -1,0 +1,67 @@
+:root {
+  --estora-white: #fafafa;
+  --estora-super: #cde7df;
+  --estora-special: #DBE9EE;
+  --estora-alternative: #E1EFF6;
+  --estora-gray: #5d6a66;
+  --estora-dark: #166088;
+  --estora-black: #0a1310;
+  --estora-light: #C0D6DF;
+  --estora-primary: #4A6FA5;
+  --estora-secondary: #97D2FB;
+
+  --neutral-white: #ffffff;
+  --neutral-black: #000000;
+  --neutral-danger: darkred;
+  --neutral-disabled: #7e7e7e;
+}
+
+$estora-white: var(--estora-white);
+$estora-super: var(--estora-super);
+$estora-special: var(--estora-special);
+$estora-alternative: var(--estora-alternative);
+$estora-gray: var(--estora-gray);
+$estora-dark: var(--estora-dark);
+$estora-black: var(--estora-black);
+$estora-light: var(--estora-light);
+$estora-primary: var(--estora-primary);
+$estora-secondary: var(--estora-secondary);
+
+$neutral-white: var(--neutral-white);
+$neutral-black: var(--neutral-black);
+$neutral-danger: var(--neutral-danger);
+$neutral-disabled: var(--neutral-disabled);
+
+@each $color-name,
+$color-value in ("white": $estora-white,
+  "super": $estora-super,
+  "special": $estora-special,
+  "alternative": $estora-alternative,
+  "gray": $estora-gray,
+  "dark": $estora-dark,
+  "black": $estora-black,
+  "light": $estora-light,
+  "primary": $estora-primary,
+  "secondary": $estora-secondary ) {
+  .u-bgcolor-estora-#{$color-name} {
+    background-color: $color-value !important;
+  }
+
+  .u-color-estora-#{$color-name} {
+    color: $color-value !important;
+  }
+}
+
+@each $color-name,
+$color-value in ("white": $neutral-white,
+  "black": $neutral-black,
+  "danger": $neutral-danger,
+  "disabled": $neutral-disabled ) {
+  .u-bgcolor-neutral-#{$color-name} {
+    background-color: $color-value !important;
+  }
+
+  .u-color-neutral-#{$color-name} {
+    color: $color-value !important;
+  }
+}

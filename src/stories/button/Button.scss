@@ -1,0 +1,67 @@
+.btn-wrapper {
+  width: 100%;
+}
+
+.btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  background-color: var(--estora-white);
+  border: 2px solid var(--estora-white);
+  color: var(--estora-black);
+  transition: all 0.25s ease;
+
+  &-block {
+    width: 100%;
+  }
+
+  &-secondary {
+    border: 2px solid var(--estora-black);
+    background-color: var(--estora-black);
+    color: var(--estora-white);
+  }
+
+  &-danger {
+    border: 2px solid var(--neutral-danger);
+    background-color: var(--neutral-danger);
+    color: var(--estora-white);
+  }
+
+  &-disabled {
+    border: 2px solid var(--neutral-disabled);
+    background-color: var(--neutral-disabled);
+    color: var(--estora-black);
+  }
+
+  &-text {
+    background-color: transparent;
+    border: 2px solid transparent;
+    color: var(--estora-white);
+    text-decoration: underline;
+    padding: 0.25rem 0;
+  }
+
+  &-outlined {
+    background-color: transparent;
+    color: var(--estora-white);
+  }
+}
+
+.dropdown {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  text-decoration: none;
+  border-radius: 0;
+  border-bottom: 2px solid var(--estora-white);
+
+  span {
+    transition: 0.35s ease-in-out;
+    transform: rotate(-180deg);
+  }
+
+  &.active {
+    span {
+      transform: rotate(0);
+    }
+  }
+}

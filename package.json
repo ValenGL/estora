@@ -1,0 +1,53 @@
+{
+  "name": "estora",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^1.12.0",
+    "@next/third-parties": "^15.2.2",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.49.1",
+    "@types/web-push": "^3.6.4",
+    "dotenv": "^16.4.5",
+    "next": "15.2.8",
+    "next-auth": "^4.24.11",
+    "next-cloudinary": "^6.16.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "sass": "^1.70.0",
+    "sharp": "^0.33.5",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.6.1",
+    "@storybook/addon-essentials": "^8.2.6",
+    "@storybook/addon-interactions": "^8.2.6",
+    "@storybook/addon-links": "^8.2.6",
+    "@storybook/addon-onboarding": "^8.2.6",
+    "@storybook/blocks": "^8.2.6",
+    "@storybook/nextjs": "^8.2.6",
+    "@storybook/react": "^8.2.6",
+    "@storybook/test": "^8.2.6",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "chromatic": "^11.5.6",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "postcss": "^8",
+    "storybook": "^8.6.3",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,9 @@
+$c-name: "hero";
+
+.#{$c-name} {
+  img {
+    height: 150px;
+    object-fit: contain;
+    border-radius: 16px;
+  }
+}

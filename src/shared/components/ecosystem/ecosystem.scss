@@ -1,0 +1,41 @@
+.eco-top {
+  border-top: 2px solid var(--estora-dark);
+  border-left: 2px solid var(--estora-dark);
+  border-right: 2px solid var(--estora-dark);
+  border-radius: 8px 8px 0 0;
+}
+
+.handshake-emoji {
+  position: relative;
+  top: 1.5rem;
+}
+
+.robot-wrapper {
+  position: relative;
+}
+
+.ecosystem-first-section {
+  min-height: 350px;
+}
+
+.ecosystem-second-section {
+  position: relative;
+  z-index: 2;
+
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
+  background-color: #19332bbf;
+
+  border-bottom: 2px solid #214338;
+  border-left: 2px solid #214338;
+  border-right: 2px solid #214338;
+
+  @media screen and (width > 1500px) {
+    margin-bottom: 4rem;
+  }
+
+  @media screen and (width > 1535px) {
+    margin-bottom: 6rem;
+  }
+}
