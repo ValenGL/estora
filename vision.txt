@@ -1,0 +1,52 @@
+﻿The Roofing Biz Broker Portal
+Documento de Visión del Producto
+MVP Versión 1.0
+Introducción
+
+Antes de hablar de pantallas, bases de datos o tecnologías, quiero transmitirte la visión del proyecto.
+
+No estamos desarrollando un CRM. Tampoco estamos desarrollando una página web. Lo que queremos construir es el comienzo de un ecosistema inteligente para conectar compradores y vendedores de empresas de roofing, donde toda la información que se genera vaya enriqueciendo la plataforma y permitiendo hacer mejores conexiones con el tiempo.
+
+El MVP no necesita resolver todo. Necesita demostrar que el concepto funciona. La idea es construir algo pequeño, sólido y escalable sobre el cual podamos seguir agregando funcionalidades durante los próximos años.
+1. Objetivo del MVP
+Crear dos bases de datos inteligentes (compradores y vendedores) y comenzar a relacionarlas entre sí. No buscamos simplemente guardar información; queremos que la plataforma entienda qué busca cada comprador y qué ofrece cada vendedor para detectar oportunidades automáticamente.
+2. Principios del sistema
+• La plataforma nunca reemplaza al broker; lo potencia.
+• Toda interacción genera información.
+• El verdadero activo del negocio es la base de conocimiento que se va construyendo.
+3. Tipos de usuarios
+Broker: acceso total y administración.
+
+Comprador: representa una organización (no una persona). Puede tener múltiples usuarios.
+
+Vendedor: representa una empresa. En el MVP asumimos una empresa por vendedor.
+4. Portal del Comprador
+El comprador define su Buy Box: facturación, EBITDA, geografía, residencial/comercial, retail/insurance, empleados, servicios, software, estructura de la operación, etc. Los criterios deben ser opcionales, editables y fácilmente ampliables.
+5. Portal del Vendedor
+El vendedor carga la información de su empresa: facturación, EBITDA, márgenes, ubicación, servicios, empleados, sistemas, management y demás atributos. La arquitectura debe permitir incorporar futuros indicadores como Investment Grade Score, PRPR y Academy.
+6. Motor de Matching
+Es el corazón del MVP. La plataforma debe calcular un porcentaje de compatibilidad entre compradores y vendedores (ej. 92%, 87%, 74%) y, en el futuro, explicar por qué obtuvo ese resultado.
+7. Marketplace Anónimo
+El comprador inicialmente solo ve información no identificatoria: facturación, EBITDA, estado, tipo de negocio, cantidad de empleados, compatibilidad, etc. Nunca nombre, dirección o marca.
+8. Proceso para revelar la empresa
+Solicitud de acceso → Revisión del broker → Firma del NDA → Acceso al CIM → Inicio del proceso tradicional de M&A. Este flujo nunca debe romperse.
+9. Dashboard del Broker
+Debe mostrar compradores, vendedores, matches, solicitudes pendientes, NDAs, nuevas empresas, actualizaciones y servir como centro de operaciones.
+10. Migración de información
+Importar la base actual de compradores para evitar volver a cargar información. Los usuarios solo deberán revisar y actualizar sus perfiles.
+11. Arquitectura dinámica
+La cantidad de variables crecerá constantemente. La plataforma debe permitir agregar nuevos atributos sin rediseñar toda la base de datos.
+12. Criterios de éxito del MVP
+Registrar compradores y vendedores, importar datos existentes, mantener perfiles, calcular compatibilidad, mostrar oportunidades anónimas, gestionar solicitudes de acceso y administrar todo desde el portal del broker.
+13. Funcionalidades futuras
+Roofing Academy, Investment Grade Score, PRPR, Data Room, CIM, Workflow, Due Diligence, Closing, CRM, IA para matching, IA para valuaciones, Benchmarking, Analytics, Capital Raising y Marketplace de financiamiento.
+14. Registro de eventos
+Toda acción debe registrarse: actualización de perfiles, cambios en Buy Box, solicitudes, NDAs, rechazos, motivos, matches y cualquier interacción. Este historial será el combustible para futuras funciones de IA y analítica.
+Conclusión
+El verdadero MVP no son los portales. Los portales son la interfaz.
+
+El verdadero MVP es demostrar que podemos construir un motor de matching inteligente entre compradores y vendedores, preservando al broker como intermediario. Si logramos eso, el resto del ecosistema podrá construirse sobre una base sólida y escalable.
+
+https://theroofingbizbroker.com/all-listings/ : 
+
+Este es el modelo de como listar los productos que tenemos en cartera para venta.
