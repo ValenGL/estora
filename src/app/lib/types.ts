@@ -1,4 +1,4 @@
-export type Role = 'broker' | 'buyer' | 'seller';
+export type Role = 'broker' | 'buyer' | 'seller' | 'pending';
 
 export type BusinessType = 'residential' | 'commercial' | 'both';
 export type WorkType = 'retail' | 'insurance' | 'both';

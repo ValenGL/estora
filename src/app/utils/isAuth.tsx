@@ -1,28 +1,47 @@
 "use client";
 
+import { useCallback } from "react";
 import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
+import type { Role } from "../lib/types";
 import { supabase } from "./../lib/supabase/supabase";
 
-// Definir el tipo del contexto
 interface AuthContextType {
   user: User | null;
   isLoggedIn: boolean;
   isLoading: boolean;
+  role: Role | null;
+  refreshRole: () => Promise<void>;
 }
 
-// Crear el contexto con valores iniciales
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isLoggedIn: false,
   isLoading: true,
+  role: null,
+  refreshRole: async () => {},
 });
 
-// Proveedor del contexto
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [role, setRole] = useState<Role | null>(null);
+
+  const fetchRole = async (userId: string) => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .single();
+    setRole((data?.role as Role) ?? null);
+  };
+
+  const refreshRole = useCallback(async () => {
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    if (!currentUser) return;
+    await fetchRole(currentUser.id);
+  }, []);
 
   useEffect(() => {
     // onAuthStateChange fires immediately with INITIAL_SESSION, replacing the
@@ -30,9 +49,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // between initial check and subsequent SIGNED_IN events.
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user ?? null);
       setIsLoggedIn(!!session?.user);
+
+      if (session?.user) {
+        await fetchRole(session.user.id);
+      } else {
+        setRole(null);
+      }
+
       setIsLoading(false);
     });
 
@@ -40,11 +66,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, isLoading }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, isLoading, role, refreshRole }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook para consumir el contexto
 export const useAuth = () => useContext(AuthContext);
