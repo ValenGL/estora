@@ -1,5 +1,4 @@
 "use client";
-import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
 import Badge from "../badge/badge";
 import Loader from "../loader/loader";
@@ -12,9 +11,6 @@ export default function Profile() {
   const [isSuscribed, setIsSuscribed] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const [imageId, setImageId] = useState("Privacidad-hero_dndoew");
-  const [imageLoading, setImageLoading] = useState(true);
-
   const [dataLoading, setDataLoading] = useState(true);
   const [lastName, setLastName] = useState();
   const [firstName, setFirstName] = useState();
@@ -25,7 +21,7 @@ export default function Profile() {
   const [editedAboutMeText, setEditedAboutMeText] = useState<any | null>("");
 
   useEffect(() => {
-    const fetchUserAndProfileImage = async () => {
+    const fetchUserData = async () => {
       const {
         data: { user },
         error,
@@ -37,24 +33,19 @@ export default function Profile() {
 
       setUser(user);
 
-      const { data, error: imgError } = await supabase
+      const { data, error: dataError } = await supabase
         .from("users")
         .select(
-          "profile_img, registerdate, firstName, lastName, aboutMeText, issubscribed, isAdmin"
+          "registerdate, firstName, lastName, aboutMeText, issubscribed, isAdmin"
         )
         .eq("id", user.id)
         .single();
 
-      if (imgError) {
-        console.error("Error obteniendo imagen de perfil:", imgError);
-        setImageLoading(false);
+      if (dataError) {
+        console.error("Error obteniendo datos de perfil:", dataError);
+        setDataLoading(false);
         return;
       }
-
-      if (data?.profile_img) {
-        setImageId(data.profile_img);
-      }
-      setImageLoading(false);
 
       if (data?.registerdate) {
         setRegisterDate(data.registerdate.slice(0, 10));
@@ -68,36 +59,8 @@ export default function Profile() {
       setDataLoading(false);
     };
 
-    fetchUserAndProfileImage();
+    fetchUserData();
   }, []);
-
-  const handleImageUploadSuccess = async (result: any) => {
-    const publicId = result.info.public_id;
-    setImageId(publicId);
-
-    console.log("Imagen subida a Cloudinary:", publicId);
-
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (error || !user) {
-      console.error("Error obteniendo usuario:", error);
-      return;
-    }
-
-    const { error: updateError } = await supabase
-      .from("users")
-      .update({ profile_img: publicId })
-      .eq("id", user.id);
-
-    if (updateError) {
-      console.error("Error actualizando imagen en base de datos:", updateError);
-    } else {
-      console.log(`Imagen de perfil actualizada para ${user.email}`);
-    }
-  };
 
   const handleSaveAboutMe = async () => {
     if (!user) return;
@@ -116,37 +79,8 @@ export default function Profile() {
   };
 
   return (
-    <section className='rounded-2xl shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] p-6 m-4 sm:m-6 u-bgcolor-estora-black select-none grid md:grid-cols-3 gap-2'>
-      <article className='flex flex-col items-center justify-center'>
-        <div className='CldImage-wrapper'>
-          <CldImage
-            src={imageId}
-            width='250'
-            height='250'
-            alt={`${user?.email || "usuario"} profile picture`}
-            crop={{ type: "auto", source: true }}
-          />
-        </div>
-        <div className='flex align-center justify-center p-4'>
-          <CldUploadWidget
-            uploadPreset='upload'
-            onSuccess={handleImageUploadSuccess}
-          >
-            {({ open }) => (
-              <Button
-                block
-                text='Change my profile picture'
-                version='outlined'
-                color='white'
-                type='button'
-                onClick={() => open()}
-              />
-            )}
-          </CldUploadWidget>
-        </div>
-      </article>
-
-      <article className='md:col-span-2 p-4'>
+    <section className='rounded-2xl shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] p-6 m-4 sm:m-6 u-bgcolor-estora-black select-none'>
+      <article className='p-4'>
         {dataLoading ? (
           <Loader block />
         ) : (
