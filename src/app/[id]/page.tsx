@@ -3,8 +3,6 @@
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getPostById } from "./../lib/supabase/supabase_manage";
-
 import Button from "../../shared/components/button/button";
 import Card from "../../shared/components/card/card";
 import Loader from "../../shared/components/loader/loader";
@@ -35,15 +33,8 @@ const PostView = () => {
     if (!id) return;
 
     const fetchPost = async () => {
-      try {
-        setIsLoading(true);
-        const fetchedPost = await getPostById(id as string);
-        setPost(fetchedPost);
-      } catch (error) {
-        console.error("Error al obtener el post:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      // getPostById removed in Sprint 1 cleanup — post detail rebuilt in Sprint 2
+      setIsLoading(false);
     };
 
     fetchPost();

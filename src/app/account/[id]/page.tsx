@@ -7,7 +7,7 @@ import Loader from "../../../shared/components/loader/loader";
 import Modal from "../../../shared/components/modal/modal";
 import Profile from "../../../shared/components/profile/profile";
 import { Button } from "../../../stories/button/Button";
-import { getUserById } from "../../lib/supabase/supabase_manage";
+// getUserById removed in Sprint 1 cleanup — user view rebuilt in Sprint 2
 
 interface ViewUser {
   document_id: string;
@@ -37,15 +37,8 @@ const PostView = () => {
     if (!id) return;
 
     const fetchUser = async () => {
-      try {
-        setIsLoading(true);
-        const fetchedUser = await getUserById(id as string);
-        setViewUser(fetchedUser);
-      } catch (error) {
-        console.error("Error al obtener el post:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      // getUserById removed — Sprint 2 will rebuild user view
+      setIsLoading(false);
     };
 
     fetchUser();

@@ -4,7 +4,6 @@ import Link from "next/link"; // Importa Link de Next.js
 import { useState } from "react";
 import Button from "../button/button";
 import Modal from "../modal/modal";
-import { deletePost } from "./../../../app/lib/supabase/supabase_manage";
 
 interface CardProps {
   price: string;
@@ -43,17 +42,9 @@ export default function Card({
   };
 
   const handleConfirmDelete = async () => {
-    try {
-      setDeleting(true);
-      await deletePost(id);
-
-      setShowModal(false);
-      onDelete();
-    } catch (error) {
-      console.error("Error al eliminar el post:", error);
-    } finally {
-      setDeleting(false);
-    }
+    // deletePost removed in Sprint 1 cleanup — delete logic rebuilt in Sprint 2
+    setShowModal(false);
+    onDelete();
   };
 
   const closeModal = () => {

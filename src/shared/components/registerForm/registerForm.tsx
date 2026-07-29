@@ -60,7 +60,9 @@ const RegisterForm: React.FC = () => {
       setLoading(true);
       setError("");
 
-      await signup(email, password, captchaToken);
+      // username defaults to email prefix; role selection rebuilt in Sprint 2
+      const username = email.split("@")[0];
+      await signup(email, password, username, "buyer", captchaToken ?? undefined);
 
       setConfirmEmailDialog(true);
     } catch (err: any) {
