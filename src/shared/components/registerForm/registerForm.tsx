@@ -2,36 +2,24 @@
 
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useRouter } from "next/navigation";
-import { RefObject, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { signup } from "./../../../app/lib/supabase/supabase_manage";
 import Button from "./../button/button";
-import Modal from "./../modal/modal";
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
 
-  const emailRef: RefObject<HTMLInputElement> = useRef(null);
-  const passwordRef: RefObject<HTMLInputElement> = useRef(null);
-  const passwordConfirmRef: RefObject<HTMLInputElement> = useRef(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordConfirmRef = useRef<HTMLInputElement>(null);
 
   const [error, setError] = useState("");
-  const [confirmEmailDialog, setConfirmEmailDialog] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const captchaRef = useRef<any>(null);
 
   const handleVerify = (token: string) => {
     setCaptchaToken(token);
-  };
-
-  function handleAlreadyRegister() {
-    router.push("/");
-  }
-
-  const closeModal = () => {
-    setConfirmEmailDialog(false);
-    router.push("/");
   };
 
   async function handleSubmit(e: React.FormEvent) {
@@ -60,16 +48,14 @@ const RegisterForm: React.FC = () => {
       setLoading(true);
       setError("");
 
-      // username defaults to email prefix; role selection rebuilt in Sprint 2
       const username = email.split("@")[0];
-      await signup(email, password, username, "buyer", captchaToken ?? undefined);
+      await signup(email, password, username, "pending", captchaToken);
 
-      setConfirmEmailDialog(true);
+      router.push("/onboarding");
     } catch (err: any) {
       setError(err.message || "Error al crear la cuenta");
     } finally {
       setLoading(false);
-
       captchaRef.current?.resetCaptcha();
       setCaptchaToken(null);
     }
@@ -129,7 +115,6 @@ const RegisterForm: React.FC = () => {
               disabled={loading}
             />
           </div>
-
           <div className='py-4 flex justify-center'>
             <HCaptcha
               ref={captchaRef}
@@ -151,29 +136,10 @@ const RegisterForm: React.FC = () => {
             text='I already have an account'
             version='outlined'
             block
-            onClick={handleAlreadyRegister}
+            onClick={() => router.push("/")}
           />
         </div>
       </section>
-
-      {confirmEmailDialog && (
-        <Modal onClose={closeModal}>
-          <div className='p-4 u-color-estora-black'>
-            <p>
-              You will receive a confirmation email soon, please validate your
-              mail.
-            </p>
-            <div className='flex items-center pt-4'>
-              <Button
-                version='secondary'
-                color='white'
-                text='I already confirmed'
-                onClick={closeModal}
-              />
-            </div>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 };
