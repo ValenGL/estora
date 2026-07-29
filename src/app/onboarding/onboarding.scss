@@ -1,0 +1,96 @@
+.onboarding-role-select {
+  display: flex;
+  height: 100dvh;
+}
+
+.onboarding-panel {
+  width: 50dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  color: var(--estora-white);
+
+  &--buy {
+    background-color: var(--estora-dark);
+  }
+
+  &--sell {
+    background-color: var(--estora-black);
+  }
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &__label {
+    font-size: 5rem;
+    line-height: 1;
+  }
+
+  &__desc {
+    font-size: 1.25rem;
+    max-width: 240px;
+    text-align: center;
+    opacity: 0.8;
+  }
+}
+
+.onboarding-username {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  gap: 1.25rem;
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 300px;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+  }
+
+  button[type='submit'] {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    border: 1px solid currentColor;
+    background: transparent;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.onboarding-error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  align-self: flex-start;
+}
