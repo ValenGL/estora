@@ -30,19 +30,19 @@ export default function Menu() {
         </button>
         <li>
           <Link
-            className={`link ${pathname === "/inicio" ? "active" : ""}`}
-            href='/inicio'
+            className={`link ${pathname === "/" ? "active" : ""}`}
+            href='/'
             onClick={() => setIsOpen(false)}
           >
-            Inicio
+            Home
           </Link>
         </li>
         {isLoggedIn && (
           <>
             <li>
               <Link
-                className={`link ${pathname === "/garpo" ? "active" : ""}`}
-                href='/garpo'
+                className={`link ${pathname === "/buyer" ? "active" : ""}`}
+                href='/buyer'
                 onClick={() => setIsOpen(false)}
               >
                 Soy cliente
@@ -51,8 +51,8 @@ export default function Menu() {
             </li>
             <li>
               <Link
-                className={`link ${pathname === "/garper" ? "active" : ""}`}
-                href='/garper'
+                className={`link ${pathname === "/seller" ? "active" : ""}`}
+                href='/seller'
                 onClick={() => setIsOpen(false)}
               >
                 Soy proveedor
@@ -63,12 +63,11 @@ export default function Menu() {
         )}
         <li>
           <Link
-            className={`link ${pathname === "/estora" ? "active" : ""}`}
-            href='/estora'
+            className={`link ${pathname === "/brokerage" ? "active" : ""}`}
+            href='/brokerage'
             onClick={() => setIsOpen(false)}
           >
-            Quienes somos
-            <span className='flex caveat'>¿qué es estora?</span>
+            About Us
           </Link>
         </li>
       </ul>

@@ -4,29 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
-.caveat {
-  font-family: var(--font-caveat), cursive;
-  font-optical-sizing: auto;
-  font-style: normal;
-
-  &-brush {
-    font-family: var(--font-caveat-brush), cursive;
-    font-weight: 400;
-    font-style: normal;
-  }
-}
-
 body {
-  font-family: var(--font-alata), sans-serif;
+  font-family: var(--font-dm-sans), sans-serif;
   font-weight: 400;
   font-style: normal;
   color: var(--estora-white);
 
-  background: radial-gradient(circle at center,
-      var(--estora-light) 0%,
-      #4A6FA5 5%,
-      var(--estora-primary) 25%,
-      #0a1310 100%);
+  background-image: linear-gradient(180deg, #3A83BE 0%, #0D174B 100%);
 }
 
 @layer utilities {
@@ -41,7 +25,7 @@ body {
 
 @media screen and (min-width: 768px) {
   .header {
-    height: 72px;
+    height: 122px;
   }
 }
 

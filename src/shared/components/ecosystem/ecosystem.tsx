@@ -52,14 +52,14 @@ export default function Ecosystem() {
       </section>
       <section className='p-2 flex flex-col text-center u-bgcolor-estora-dark rounded-b-2xl mx-4 mb-4 sm:mx-6 sm:mb-6'>
         <div className='flex justify-center items-center'>
-          <span className='text-2xl sm:text-4xl caveat-brush w-36'>Empresario</span>
+          <span className='text-2xl sm:text-4xl caveat-brush w-48'>Empresario</span>
           <div className='flex flex-col mb-6'>
             <span className='handshake-emoji'>🤝</span>
             <span className='shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] u-bgcolor-estora-black p-2 rounded-2xl m-4 sm:m-6 select-none'>
               <span className='text-xl sm:text-2xl'>TABLERO</span>
             </span>
           </div>
-          <span className='text-2xl sm:text-4xl caveat-brush w-36'>Inversionista  </span>
+          <span className='text-2xl sm:text-4xl caveat-brush w-48'>Inversionista  </span>
         </div>
         <h4 className='text-lg text-center u-color-estora-white underline mb-2'>
           <Link href='/estora'>Conocer más</Link>

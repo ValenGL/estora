@@ -1,6 +1,6 @@
 "use client";
 
-const Tyc = () => {
+const TermsAndConditions= () => {
   return (
     <article className='container'>
       <div className='p-8'>
@@ -111,4 +111,4 @@ const Tyc = () => {
   );
 };
 
-export default Tyc;
+export default TermsAndConditions;

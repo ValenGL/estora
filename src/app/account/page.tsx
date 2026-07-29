@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Dashboard from "../../shared/components/dashboard/dashboard";
 import Profile from "../../shared/components/profile/profile";
-import PushNotificationManager from "./../../shared/components/pushNotificationManager/pushNotificationManager";
-import { supabase } from "./../lib/supabase/supabase";
+import PushNotificationManager from "../../shared/components/pushNotificationManager/pushNotificationManager";
+import { supabase } from "../lib/supabase/supabase";
 
 const Account: any = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);

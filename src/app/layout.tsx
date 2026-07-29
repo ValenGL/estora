@@ -5,31 +5,17 @@ import Header from "./../shared/components/header/header";
 import "./globals.scss";
 import { AuthProvider } from "./utils/isAuth";
 
-import { Alata, Caveat, Caveat_Brush } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 
-const alata = Alata({
-  variable: "--font-alata",
-  weight: "400",
-  display: "swap",
-  subsets: ["latin"],
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-  subsets: ["latin"],
-});
-
-const caveatBrush = Caveat_Brush({
-  variable: "--font-caveat-brush",
-  weight: "400",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
   subsets: ["latin"],
 });
 export const metadata: Metadata = {
-  title: "ESTORA",
-  description: "Auto generated CRM",
+  title: "Brokerage",
+  description: "Brokerage",
 };
 
 export default function RootLayout({
@@ -41,7 +27,7 @@ export default function RootLayout({
     <>
       <html
         lang='en'
-        className={`${alata.variable} ${caveat.variable} ${caveatBrush.variable}`}
+        className={`${dmSans.variable}`}
       >
         <head>
           <link

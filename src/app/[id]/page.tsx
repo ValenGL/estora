@@ -156,8 +156,8 @@ const PostView = () => {
             </p>
             <div className='flex w-full justify-end'>
               <Image
-                src={"/assets/images/estora.svg"}
-                alt='Estora logo'
+                src={"/assets/images/brokerage.svg"}
+                alt='Brokerage logo'
                 width={96}
                 height={215}
                 className='pb-2 w-24'

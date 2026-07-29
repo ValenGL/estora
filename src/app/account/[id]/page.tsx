@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Modal from "./../../..//shared/components/modal/modal";
-import Profile from "./../../..//shared/components/profile/profile";
-import { Button } from "./../../..//stories/button/Button";
-import Loader from "./../../../shared/components/loader/loader";
-import { getUserById } from "./../../lib/supabase/supabase_manage";
+import Loader from "../../../shared/components/loader/loader";
+import Modal from "../../../shared/components/modal/modal";
+import Profile from "../../../shared/components/profile/profile";
+import { Button } from "../../../stories/button/Button";
+import { getUserById } from "../../lib/supabase/supabase_manage";
 
 interface ViewUser {
   document_id: string;
@@ -80,8 +80,8 @@ const PostView = () => {
             </p>
             <div className='flex w-full justify-end'>
               <Image
-                src={"/assets/images/estora.svg"}
-                alt='Estora logo'
+                src={"/assets/images/brokerage.svg"}
+                alt='Brokerage logo'
                 width={96}
                 height={215}
                 className='pb-2 w-24'

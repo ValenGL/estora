@@ -95,51 +95,43 @@ const Footer = () => {
                 className={`link ${pathname === "/" ? "active" : ""}`}
                 href='/'
               >
-                Inicio
+                Home
               </Link>
             </li>
             {isLoggedIn && (
               <>
                 <li className='p-2'>
                   <Link
-                    className={`link ${pathname === "/garpo" ? "active" : ""}`}
-                    href='/garpo'
+                    className={`link ${pathname === "/buyer" ? "active" : ""}`}
+                    href='/buyer'
                   >
-                    Ofrezco laburo
+                    I want to buy
                   </Link>
                 </li>
                 <li className='p-2'>
                   <Link
-                    className={`link ${pathname === "/garper" ? "active" : ""}`}
-                    href='/garper'
+                    className={`link ${pathname === "/seller" ? "active" : ""}`}
+                    href='/seller'
                   >
-                    Quiero laburar
+                    I want to sell
                   </Link>
                 </li>
               </>
             )}
             <li className='p-2'>
               <Link
-                className={`link ${pathname === "/estora" ? "active" : ""}`}
-                href='/estora'
+                className={`link ${pathname === "/brokerage" ? "active" : ""}`}
+                href='/brokerage'
               >
-                Quiénes somos
+                About Us
               </Link>
             </li>
             <li className='p-2'>
               <Link
-                className={`link ${pathname === "/tyc" ? "active" : ""}`}
-                href='/tyc'
+                className={`link ${pathname === "/terms-and-conditions" ? "active" : ""}`}
+                href='/terms-and-conditions'
               >
-                Términos y condiciones
-              </Link>
-            </li>
-            <li className='p-2'>
-              <Link
-                className={`link ${pathname === "/privacidad" ? "active" : ""}`}
-                href='/privacidad'
-              >
-                Cómo cuidamos tu privacidad
+                Terms and Conditions
               </Link>
             </li>
           </ul>
@@ -147,7 +139,7 @@ const Footer = () => {
       </div>
       <div className='container mx-auto flex justify-center text-sm u-bgcolor-estora-white'>
         <span className='u-color-estora-black py-2 text-center'>
-          © 2026, Estora
+          © 2026, The Roofing Biz Broker
         </span>
       </div>
     </footer>

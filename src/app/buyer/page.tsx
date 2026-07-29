@@ -1,24 +1,22 @@
 "use client";
 
-import CreatePost from "../../shared/components/createPost/createPost";
 import Dashboard from "../../shared/components/dashboard/dashboard";
 import ProtectedRoute from "../utils/protectedRoute";
 
-const Proveedor = () => {
+const Buyer = () => {
   return (
     <section>
       <article className='container'>
         <div className='p-4 sm:p-6 animate-fadeInUp'>
-          <h1 className='text-4xl pb-4'>Encontrá al cliente ideal</h1>
+          <h1 className='text-4xl pb-4'>Business Dashboard</h1>
           <h2 className='text-3xl caveat'>
-            Creá tu post con el proyecto que estas ofreciendo
+            Find the perfect business for you
           </h2>
         </div>
       </article>
-      <CreatePost />
-      <Dashboard />
+      <Dashboard hasFilters />
     </section>
   );
 };
 
-export default ProtectedRoute(Proveedor);
+export default ProtectedRoute(Buyer);
