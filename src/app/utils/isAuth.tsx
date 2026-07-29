@@ -22,25 +22,29 @@ const AuthContext = createContext<AuthContextType>({
   refreshRole: async () => {},
 });
 
+// Module-level — stable, no closure issues
+const fetchRole = async (
+  userId: string,
+  setRole: (role: Role | null) => void
+) => {
+  const { data } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", userId)
+    .single();
+  setRole((data?.role as Role) ?? null);
+};
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState<Role | null>(null);
 
-  const fetchRole = async (userId: string) => {
-    const { data } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", userId)
-      .single();
-    setRole((data?.role as Role) ?? null);
-  };
-
   const refreshRole = useCallback(async () => {
     const { data: { user: currentUser } } = await supabase.auth.getUser();
     if (!currentUser) return;
-    await fetchRole(currentUser.id);
+    await fetchRole(currentUser.id, setRole);
   }, []);
 
   useEffect(() => {
@@ -54,7 +58,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoggedIn(!!session?.user);
 
       if (session?.user) {
-        await fetchRole(session.user.id);
+        await fetchRole(session.user.id, setRole);
       } else {
         setRole(null);
       }
