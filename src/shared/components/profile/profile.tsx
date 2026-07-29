@@ -135,7 +135,7 @@ export default function Profile() {
             {({ open }) => (
               <Button
                 block
-                text='Cambiar mi foto de perfil'
+                text='Change my profile picture'
                 version='outlined'
                 color='white'
                 type='button'

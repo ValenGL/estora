@@ -77,13 +77,13 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div className='mhWrapper flex-col sm:flex sm:items-center sm:justify-center m-4 sm:m-6'>
-      <h1 className='clipped'>Registrarse</h1>
+      <h1 className='clipped'>Register</h1>
       <h2 className='text-4xl sm:text-6xl caveat'>
-        Queremos que seas parte del futuro.
+        Join the best marketplace for roofing businesses
       </h2>
       <section className='u-bgcolor-estora-dark shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] my-6 p-6 rounded-2xl'>
         <div className='pb-4'>
-          <h3 className='text-2xl'>Registrar usuario en ESTORA</h3>
+          <h3 className='text-2xl'>Register in Brokerage</h3>
         </div>
         {error && <span className='text-red-500'>Error: {error}</span>}
         <form className='flex flex-col' onSubmit={handleSubmit}>
@@ -96,35 +96,35 @@ const RegisterForm: React.FC = () => {
               id='email'
               type='email'
               required
-              placeholder='Ingresá tu correo electrónico'
+              placeholder='Enter your email'
               ref={emailRef}
               disabled={loading}
             />
           </div>
           <div className='grid pb-2'>
             <label className='pr-4' htmlFor='password'>
-              <span>Contraseña</span>
+              <span>Password</span>
             </label>
             <input
               className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
               id='password'
               type='password'
               required
-              placeholder='Ingresá tu contraseña'
+              placeholder='Enter your password'
               ref={passwordRef}
               disabled={loading}
             />
           </div>
           <div className='grid pb-2'>
             <label className='pr-4' htmlFor='confirmPassword'>
-              <span>Confirmar contraseña</span>
+              <span>Confirm password</span>
             </label>
             <input
               className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
               id='confirmPassword'
               type='password'
               required
-              placeholder='Volvé a ingresar tu contraseña'
+              placeholder='Enter your password again'
               ref={passwordConfirmRef}
               disabled={loading}
             />
@@ -139,7 +139,7 @@ const RegisterForm: React.FC = () => {
           </div>
           <div className='my-4'>
             <Button
-              text={loading ? "Registrando..." : "Registrarme"}
+              text={loading ? "Registering..." : "Register"}
               version={loading ? "disabled" : "outlined"}
               block
               type='submit'
@@ -148,7 +148,7 @@ const RegisterForm: React.FC = () => {
         </form>
         <div className='mb-4'>
           <Button
-            text='Ya tengo cuenta'
+            text='I already have an account'
             version='outlined'
             block
             onClick={handleAlreadyRegister}
@@ -160,14 +160,14 @@ const RegisterForm: React.FC = () => {
         <Modal onClose={closeModal}>
           <div className='p-4 u-color-estora-black'>
             <p>
-              Te llegará un correo de confirmación pronto, por favor valida tu
+              You will receive a confirmation email soon, please validate your
               mail.
             </p>
             <div className='flex items-center pt-4'>
               <Button
                 version='secondary'
                 color='white'
-                text='Ya lo confirmé'
+                text='I already confirmed'
                 onClick={closeModal}
               />
             </div>

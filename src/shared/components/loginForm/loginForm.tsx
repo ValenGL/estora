@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Alert from "../alert/alert";
 import Button from "../button/button";
 import { supabase } from "./../../../app/lib/supabase/supabase";
+import { useAuth } from "./../../../app/utils/isAuth";
 import { login } from "./../../../app/lib/supabase/supabase_manage";
 
 import "./loginForm.scss";
@@ -28,6 +29,11 @@ const LoginForm = () => {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const captchaRef = useRef<any>(null);
   const nonceRef = useRef<string | null>(null);
+  const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    if (isLoggedIn) router.push("/inicio");
+  }, [isLoggedIn, router]);
 
   const handleGoogleSignIn = useCallback(
     async (response: any) => {
@@ -115,7 +121,6 @@ const LoginForm = () => {
     try {
       setLoading(true);
       await login(email, password, captchaToken);
-      router.push("/inicio");
     } catch (err: any) {
       setError(
         err.message || "Error al iniciar sesión. Credenciales incorrectas."

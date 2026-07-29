@@ -24,7 +24,7 @@ function LogoutButton() {
     <div className='flex justify-end items-center'>
       <Button
         version='outlined'
-        text='Cerrar sesión'
+        text='Log out'
         type='button'
         onClick={handleLogout}
       />
@@ -37,14 +37,14 @@ function AccountButton() {
   const router = useRouter();
 
   const handleAccountNavigation = () => {
-    router.push("/cuenta"); // Redirect to account page
+    router.push("/account"); // Redirect to account page
   };
 
   return (
     <div className='flex justify-end items-center'>
       <Button
         version='text'
-        text='Mi cuenta'
+        text='My account'
         type='button'
         onClick={handleAccountNavigation}
       />
@@ -79,12 +79,12 @@ const Home = () => {
       <section className='p-4 sm:p-6 animate-fadeInUp'>
         <div className='flex flex-col md:flex-row items-start md:items-center justify-between'>
           <div className='flex flex-row items-start gap-x-4'>
-            <h2 className='sm:text-4xl mb-2 caveat'>Bienvenido:</h2>
-            <span className='sm:text-3xl mb-2'>
-              {currentUser || "Cargando..."}
+            <h2 className='sm:text-xl caveat'>Welcome:</h2>
+            <span className='sm:text-xl'>
+              {currentUser || "Loading..."}
             </span>
           </div>
-          <div className='flex pt-4 gap-x-4'>
+          <div className='flex gap-x-4'>
             <AccountButton />
             <LogoutButton />
           </div>

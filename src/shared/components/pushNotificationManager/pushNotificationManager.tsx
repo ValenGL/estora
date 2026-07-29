@@ -62,32 +62,32 @@ export default function PushNotificationManager({
 
   if (!isSupported) {
     return (
-      <p>Las notificaciones push no son compatibles con este navegador.</p>
+      <p>Push notifications are not supported by this browser</p>
     );
   }
 
   return (
     <div className='mx-2 mb-4 p-4'>
-      <h3 className='underline text-xl md:text-2xl'>Notificaciones Push</h3>
+      <h3 className='underline text-xl md:text-2xl'>Push notifications</h3>
       {subscription ? (
         <>
           <p className='py-2 text-lg md:text-xl caveat'>
-            Te suscribiste a las notificaciones para enterarte de todo.
+            You are subscribed to push notifications
           </p>
           <Button onClick={unsubscribeFromPush} version='danger' color='white'>
-            Cancelar suscripción
+            Unsubscribe
           </Button>
         </>
       ) : (
         <>
           <p className='py-2 text-lg md:text-xl caveat'>
-            Todavía no te suscribiste notificaciones push.
+            You are not subscribed to push notifications
           </p>
           <Button
             onClick={subscribeToPushNotifications}
             version={userId ? "primary" : "disabled"}
           >
-            Suscribirse
+            Subscribe
           </Button>
         </>
       )}

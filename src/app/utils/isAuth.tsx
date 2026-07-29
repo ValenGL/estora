@@ -25,21 +25,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user ?? null);
-      setIsLoggedIn(!!data.user);
-      setIsLoading(false);
-    };
-
-    checkUser();
-
-    // Escuchar cambios en la autenticación
+    // onAuthStateChange fires immediately with INITIAL_SESSION, replacing the
+    // need for a separate getUser() call and eliminating the race condition
+    // between initial check and subsequent SIGNED_IN events.
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_, session) => {
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setIsLoggedIn(!!session?.user);
+      setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();

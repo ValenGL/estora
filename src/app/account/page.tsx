@@ -23,8 +23,8 @@ const Account: any = () => {
     <section className='mhWrapper flex-col'>
       <article className='container'>
         <div className='p-4 sm:p-6 animate-fadeInUp'>
-          <h1 className='text-4xl pb-4'>Mi cuenta.</h1>
-          <h2 className='text-3xl caveat'>Acá podes gestionar tus posts.</h2>
+          <h1 className='text-4xl pb-4'>My account.</h1>
+          <h2 className='text-3xl caveat'>Here you can manage your listings.</h2>
         </div>
       </article>
       <Profile />
