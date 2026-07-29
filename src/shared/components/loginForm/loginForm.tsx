@@ -29,11 +29,11 @@ const LoginForm = () => {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const captchaRef = useRef<any>(null);
   const nonceRef = useRef<string | null>(null);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, role } = useAuth();
 
   useEffect(() => {
-    if (isLoggedIn) router.push("/inicio");
-  }, [isLoggedIn, router]);
+    if (isLoggedIn && role !== "pending") router.push("/inicio");
+  }, [isLoggedIn, role, router]);
 
   const handleGoogleSignIn = useCallback(
     async (response: any) => {

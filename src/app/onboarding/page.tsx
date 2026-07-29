@@ -22,6 +22,7 @@ export default function Onboarding() {
 
   const [step, setStep] = useState<1 | 2>(1);
   const [panelLoading, setPanelLoading] = useState(false);
+  const [panelError, setPanelError] = useState("");
 
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -40,6 +41,7 @@ export default function Onboarding() {
       setStep(2);
     } catch (err) {
       console.error("Error setting role:", err);
+      setPanelError("Error al seleccionar. Intentá de nuevo.");
     } finally {
       setPanelLoading(false);
     }
@@ -67,7 +69,7 @@ export default function Onboarding() {
         err?.message?.toLowerCase().includes("unique") ||
         err?.message?.toLowerCase().includes("duplicate");
       setUsernameError(
-        isDuplicate ? "Este username ya está en uso" : "Error al guardar. Intentá de nuevo."
+        isDuplicate ? "This username is already in use" : "Error while saving. Try again."
       );
     } finally {
       setUsernameLoading(false);
@@ -90,6 +92,9 @@ export default function Onboarding() {
               I want to acquire a roofing business
             </span>
           </button>
+          {panelError && (
+            <span className="onboarding-panel-error">{panelError}</span>
+          )}
           <button
             className="onboarding-panel onboarding-panel--sell"
             onClick={() => handleRoleSelect("seller")}
