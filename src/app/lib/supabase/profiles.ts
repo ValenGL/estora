@@ -16,7 +16,7 @@ export const getProfile = async (): Promise<Profile> => {
 };
 
 export const updateProfile = async (
-  updates: Partial<Pick<Profile, 'username'>>
+  updates: Partial<Pick<Profile, 'username' | 'role'>>
 ): Promise<Profile> => {
   const { data: { user }, error: userError } = await supabase.auth.getUser();
   if (userError || !user) throw new Error('No authenticated user');
