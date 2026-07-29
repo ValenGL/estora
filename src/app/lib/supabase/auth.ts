@@ -15,20 +15,15 @@ export const signup = async (
     options: {
       emailRedirectTo: 'https://theroofingbizbroker.com/',
       captchaToken,
+      data: { username, role },
     },
   });
 
   if (authError) throw new Error(authError.message);
   if (!data.user) throw new Error('No se pudo obtener la información del usuario');
 
-  const { error: profileError } = await supabase.from('profiles').insert({
-    id: data.user.id,
-    username,
-    role,
-  });
-
-  if (profileError) throw new Error(profileError.message);
-
+  // Profile is created automatically by the on_auth_user_created trigger in Supabase,
+  // which reads username and role from raw_user_meta_data.
   return { success: true, user: data.user };
 };
 
