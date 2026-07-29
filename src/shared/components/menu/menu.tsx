@@ -37,16 +37,13 @@ export default function Menu() {
             Home
           </Link>
         </li>
-        {isLoggedIn && (
-          <>
             <li>
               <Link
                 className={`link ${pathname === "/buyer" ? "active" : ""}`}
                 href='/buyer'
                 onClick={() => setIsOpen(false)}
               >
-                Soy cliente
-                <span className='flex caveat'>Quiero encontrar productos</span>
+                Buy
               </Link>
             </li>
             <li>
@@ -55,12 +52,10 @@ export default function Menu() {
                 href='/seller'
                 onClick={() => setIsOpen(false)}
               >
-                Soy proveedor
-                <span className='flex caveat'>Quiero ofrecer mis productos</span>
+                Sell
               </Link>
             </li>
-          </>
-        )}
+
         <li>
           <Link
             className={`link ${pathname === "/brokerage" ? "active" : ""}`}

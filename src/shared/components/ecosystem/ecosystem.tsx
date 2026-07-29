@@ -6,11 +6,11 @@ export default function Ecosystem() {
   return (
     <>
       <h3 className='text-5xl caveat text-center mb-6'>
-        Un universo de posibilidades.
+        A universe of possibilities.
       </h3>
       <section className='grid sm:grid-cols-2 u-color-estora-white eco-top mx-4 sm:mx-6'>
         <article className='p-4 flex flex-col gap-y-6 text-center w-full'>
-          <span className='text-2xl'>Busca inversionistas para su proyecto establecido.</span>
+          <span className='text-2xl'>Find investors for your established project.</span>
           <div className='mx-auto'>
             <svg
               width='42'
@@ -27,10 +27,10 @@ export default function Ecosystem() {
               />
             </svg>
           </div>
-          <span className='text-2xl sm:text-4xl caveat-brush'>Empresario</span>
+          <span className='text-2xl sm:text-4xl caveat-brush'>Seller</span>
         </article>
         <article className='p-4 flex flex-col gap-y-6 text-center w-full'>
-          <span className='text-2xl'>Busca oportunidades rentables de inversion en proyectos.</span>
+          <span className='text-2xl'>Find profitable business opportunities.</span>
           <div className='mx-auto'>
             <svg
               width='42'
@@ -47,22 +47,22 @@ export default function Ecosystem() {
               />
             </svg>
           </div>
-          <span className='text-2xl sm:text-4xl caveat-brush'>Inversionista</span>
+          <span className='text-2xl sm:text-4xl caveat-brush'>Buyer</span>
         </article>
       </section>
       <section className='p-2 flex flex-col text-center u-bgcolor-estora-dark rounded-b-2xl mx-4 mb-4 sm:mx-6 sm:mb-6'>
         <div className='flex justify-center items-center'>
-          <span className='text-2xl sm:text-4xl caveat-brush w-48'>Empresario</span>
+          <span className='text-2xl sm:text-4xl caveat-brush w-48'>Seller</span>
           <div className='flex flex-col mb-6'>
             <span className='handshake-emoji'>🤝</span>
             <span className='shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] u-bgcolor-estora-black p-2 rounded-2xl m-4 sm:m-6 select-none'>
-              <span className='text-xl sm:text-2xl'>TABLERO</span>
+              <span className='text-xl sm:text-2xl'>DASHBOARD</span>
             </span>
           </div>
-          <span className='text-2xl sm:text-4xl caveat-brush w-48'>Inversionista  </span>
+          <span className='text-2xl sm:text-4xl caveat-brush w-48'>Buyer</span>
         </div>
         <h4 className='text-lg text-center u-color-estora-white underline mb-2'>
-          <Link href='/estora'>Conocer más</Link>
+          <Link href='/estora'>Learn more</Link>
         </h4>
       </section>
     </>

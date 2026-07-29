@@ -161,7 +161,7 @@ export default function Dashboard({
       )}
       <section className='shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] u-bgcolor-estora-black p-6 rounded-2xl m-4 sm:m-6 select-none'>
         <div className='flex w-full justify-between'>
-          <h2 className='text-2xl'>TABLERO</h2>
+          <h2 className='text-2xl'>DASHBOARD</h2>
 
           <div className='flex flex-end gap-x-2'>
             {dashboardLink && (
