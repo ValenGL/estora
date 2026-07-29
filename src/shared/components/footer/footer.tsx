@@ -98,26 +98,22 @@ const Footer = () => {
                 Home
               </Link>
             </li>
-            {isLoggedIn && (
-              <>
-                <li className='p-2'>
-                  <Link
-                    className={`link ${pathname === "/buyer" ? "active" : ""}`}
-                    href='/buyer'
-                  >
-                    I want to buy
-                  </Link>
-                </li>
-                <li className='p-2'>
-                  <Link
-                    className={`link ${pathname === "/seller" ? "active" : ""}`}
-                    href='/seller'
-                  >
-                    I want to sell
-                  </Link>
-                </li>
-              </>
-            )}
+            <li className='p-2'>
+              <Link
+                className={`link ${pathname === "/buyer" ? "active" : ""}`}
+                href='/buyer'
+              >
+                I want to buy
+              </Link>
+            </li>
+            <li className='p-2'>
+              <Link
+                className={`link ${pathname === "/seller" ? "active" : ""}`}
+                href='/seller'
+              >
+                I want to sell
+              </Link>
+            </li>
             <li className='p-2'>
               <Link
                 className={`link ${pathname === "/brokerage" ? "active" : ""}`}

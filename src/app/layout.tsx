@@ -31,20 +31,6 @@ export default function RootLayout({
       >
         <head>
           <link
-            rel='preload'
-            href='/assets/images/estora-hero-poster.webp'
-            as='image'
-            type='image/webp'
-            fetchPriority='high'
-          />
-          <link
-            rel='preload'
-            href='/assets/images/estora-hero.mp4'
-            as='video'
-            type='video/mp4'
-            fetchPriority='high'
-          />
-          <link
             rel='preconnect'
             href='https://fonts.googleapis.com'
             crossOrigin='anonymous'
