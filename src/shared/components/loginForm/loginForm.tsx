@@ -6,8 +6,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Alert from "../alert/alert";
 import Button from "../button/button";
 import { supabase } from "./../../../app/lib/supabase/supabase";
-import { useAuth } from "./../../../app/utils/isAuth";
 import { login } from "./../../../app/lib/supabase/supabase_manage";
+import { useAuth } from "./../../../app/utils/isAuth";
 
 import "./loginForm.scss";
 
@@ -203,7 +203,7 @@ const LoginForm = () => {
 
         <div className='flex my-4'>
           <Button
-            text={loading ? "Iniciando..." : "Entrar"}
+            text={loading ? "Starting..." : "Enter"}
             version={loading ? "disabled" : "outlined"}
             block
             type='submit'
@@ -232,7 +232,7 @@ const LoginForm = () => {
 
       <div className='mb-4'>
         <Button
-          text='No tengo cuenta'
+          text="Don't have an account?"
           version='outlined'
           block
           onClick={handleRegister}

@@ -9,10 +9,10 @@ import "./onboarding.scss";
 const USERNAME_REGEX = /^[a-z0-9_-]+$/i;
 
 function validateUsername(value: string): string | null {
-  if (value.length < 3) return "Mínimo 3 caracteres";
-  if (value.length > 20) return "Máximo 20 caracteres";
-  if (!/^[a-z]/i.test(value)) return "Debe comenzar con una letra";
-  if (!USERNAME_REGEX.test(value)) return "Solo letras, números, _ y -";
+  if (value.length < 3) return "Minimum 3 characters";
+  if (value.length > 20) return "Maximum 20 characters";
+  if (!/^[a-z]/i.test(value)) return "Must start with a letter";
+  if (!USERNAME_REGEX.test(value)) return "Only letters, numbers, _ and -";
   return null;
 }
 
@@ -31,7 +31,7 @@ export default function Onboarding() {
   useEffect(() => {
     if (isLoading) return;
     if (!user) { router.push("/"); return; }
-    if (role !== "pending" && role !== null) router.push("/inicio");
+    if (role !== "pending" && role !== null) router.push("/");
   }, [isLoading, user, role, router]);
 
   const handleRoleSelect = async (chosen: "buyer" | "seller") => {
@@ -41,7 +41,7 @@ export default function Onboarding() {
       setStep(2);
     } catch (err) {
       console.error("Error setting role:", err);
-      setPanelError("Error al seleccionar. Intentá de nuevo.");
+      setPanelError("Error when setting role. Please try again.");
     } finally {
       setPanelLoading(false);
     }
@@ -62,7 +62,7 @@ export default function Onboarding() {
     try {
       await updateProfile({ username });
       await refreshRole();
-      router.push("/inicio");
+      router.push("/");
     } catch (err: any) {
       const isDuplicate =
         err?.code === "23505" ||
