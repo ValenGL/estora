@@ -49,7 +49,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
-            {process.env.NODE_ENV !== 'production' && <DebugPanel />}
+            <DebugPanel />
           </AuthProvider>
         </body>
       </html>
