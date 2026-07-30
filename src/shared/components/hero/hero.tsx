@@ -20,8 +20,8 @@ export default function Hero() {
       <article className='flex h-full justify-end items-end rounded-2xl'>
         <div className='flex w-full justify-end'>
           <Image
-            src={"/assets/images/estora-robot.png"}
-            alt='Estora robot'
+            src={"/assets/images/brokerage-robot.png"}
+            alt='Brokerage robot'
             width={1464}
             height={150}
           />
