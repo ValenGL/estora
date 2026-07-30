@@ -11,6 +11,8 @@ interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
   role: Role | null;
+  effectiveRole: Role | null;
+  setDebugRole: (role: Role | null) => void;
   refreshRole: () => Promise<void>;
 }
 
@@ -19,6 +21,8 @@ const AuthContext = createContext<AuthContextType>({
   isLoggedIn: false,
   isLoading: true,
   role: null,
+  effectiveRole: null,
+  setDebugRole: () => {},
   refreshRole: async () => {},
 });
 
@@ -40,6 +44,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState<Role | null>(null);
+  const [debugRole, setDebugRoleState] = useState<Role | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const stored = localStorage.getItem('debug_role') as Role | null;
+    if (stored) setDebugRoleState(stored);
+  }, []);
+
+  const setDebugRole = useCallback((newRole: Role | null) => {
+    setDebugRoleState(newRole);
+    if (newRole === null) {
+      localStorage.removeItem('debug_role');
+    } else {
+      localStorage.setItem('debug_role', newRole);
+    }
+  }, []);
+
+  const effectiveRole = debugRole ?? role;
 
   const refreshRole = useCallback(async () => {
     const { data: { user: currentUser } } = await supabase.auth.getUser();
@@ -70,7 +92,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, isLoading, role, refreshRole }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, isLoading, role, effectiveRole, setDebugRole, refreshRole }}>
       {children}
     </AuthContext.Provider>
   );
