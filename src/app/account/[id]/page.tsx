@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Button from "../../../shared/components/button/button";
 import Loader from "../../../shared/components/loader/loader";
 import Modal from "../../../shared/components/modal/modal";
 import Profile from "../../../shared/components/profile/profile";
-import { Button } from "../../../stories/button/Button";
 // getUserById removed in Sprint 1 cleanup — user view rebuilt in Sprint 2
 
 interface ViewUser {
