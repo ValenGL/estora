@@ -105,16 +105,16 @@ const LoginForm = () => {
     setError("");
 
     if (!email.includes("@")) {
-      setEmailError("El correo no es válido.");
+      setEmailError("Email is not valid.");
       return;
     }
     if (password.length < 8) {
-      setPasswordError("La contraseña debe tener al menos 8 caracteres.");
+      setPasswordError("Password must be at least 8 characters.");
       return;
     }
 
     if (!captchaToken) {
-      setError("Por favor, completa el CAPTCHA.");
+      setError("Please, complete the CAPTCHA.");
       return;
     }
 
@@ -123,7 +123,7 @@ const LoginForm = () => {
       await login(email, password, captchaToken);
     } catch (err: any) {
       setError(
-        err.message || "Error al iniciar sesión. Credenciales incorrectas."
+        err.message || "Invalid credentials."
       );
     } finally {
       setLoading(false);
@@ -135,7 +135,7 @@ const LoginForm = () => {
   return (
     <section className='flex flex-col justify-center u-bgcolor-estora-dark shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] p-6 m-4 sm:m-6 sm:px-12 rounded-2xl'>
       <div className='pb-4'>
-        <h3 className='text-2xl'>Iniciar sesión</h3>
+        <h3 className='text-2xl'>Sign in</h3>
       </div>
 
       {error && (
@@ -154,7 +154,7 @@ const LoginForm = () => {
             id='email'
             type='email'
             required
-            placeholder='Ingresá tu correo electrónico'
+            placeholder='Insert your email'
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -171,14 +171,14 @@ const LoginForm = () => {
 
         <div className='grid relative py-2 mb-4'>
           <label className='pr-4 pb-2' htmlFor='password'>
-            <span>Contraseña</span>
+            <span>Password</span>
           </label>
           <input
             className='px-3 py-1 mb-8 lg:mb-5 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
             id='password'
             type='password'
             required
-            placeholder='Ingresá tu contraseña'
+            placeholder='Insert your password'
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
