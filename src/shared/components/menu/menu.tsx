@@ -8,7 +8,7 @@ import "./menu.scss";
 
 export default function Menu() {
   const pathname = usePathname();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, effectiveRole } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -37,25 +37,35 @@ export default function Menu() {
             Home
           </Link>
         </li>
-            <li>
-              <Link
-                className={`link ${pathname === "/buyer" ? "active" : ""}`}
-                href='/buyer'
-                onClick={() => setIsOpen(false)}
-              >
-                Buy
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={`link ${pathname === "/seller" ? "active" : ""}`}
-                href='/seller'
-                onClick={() => setIsOpen(false)}
-              >
-                Sell
-              </Link>
-            </li>
-
+        {effectiveRole === 'broker' && (
+          <li>
+            <Link
+              className={`link ${pathname === "/dashboard" ? "active" : ""}`}
+              href='/dashboard'
+              onClick={() => setIsOpen(false)}
+            >
+              Dashboard
+            </Link>
+          </li>
+        )}
+        <li>
+          <Link
+            className={`link ${pathname === "/buyer" ? "active" : ""}`}
+            href='/buyer'
+            onClick={() => setIsOpen(false)}
+          >
+            Buy
+          </Link>
+        </li>
+        <li>
+          <Link
+            className={`link ${pathname === "/seller" ? "active" : ""}`}
+            href='/seller'
+            onClick={() => setIsOpen(false)}
+          >
+            Sell
+          </Link>
+        </li>
         <li>
           <Link
             className={`link ${pathname === "/brokerage" ? "active" : ""}`}
