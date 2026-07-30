@@ -30,8 +30,8 @@ export default function Menu() {
         </button>
         <li>
           <Link
-            className={`link ${pathname === "/" ? "active" : ""}`}
-            href='/'
+            className={`link ${pathname === "/" || pathname === "/inicio" ? "active" : ""}`}
+            href={isLoggedIn ? "/inicio" : "/"}
             onClick={() => setIsOpen(false)}
           >
             Home
