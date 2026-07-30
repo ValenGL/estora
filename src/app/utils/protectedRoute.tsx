@@ -6,11 +6,11 @@ import { useAuth } from "./isAuth";
 
 const ProtectedRoute = <P extends object>(Component: ComponentType<P>) => {
   return function WrappedComponent(props: P) {
-    const { user, isLoading, role } = useAuth();
+    const { user, isLoading, effectiveRole } = useAuth();
 
     if (isLoading) return null;
     if (!user) redirect("/");
-    if (role === "pending") redirect("/onboarding");
+    if (effectiveRole === "pending") redirect("/onboarding");
 
     return <Component {...props} />;
   };

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import Footer from "./../shared/components/footer/footer";
 import Header from "./../shared/components/header/header";
+import DebugPanel from "./../shared/components/debugPanel/debugPanel";
 import "./globals.scss";
 import { AuthProvider } from "./utils/isAuth";
 
@@ -48,6 +49,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            {process.env.NODE_ENV !== 'production' && <DebugPanel />}
           </AuthProvider>
         </body>
       </html>
