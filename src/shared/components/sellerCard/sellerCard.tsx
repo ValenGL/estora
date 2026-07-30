@@ -55,9 +55,7 @@ export default function SellerCard({ seller, blurred = false }: SellerCardProps)
         </div>
         <div className="text-right">
           <span className="opacity-60 text-xs uppercase tracking-wider">State</span>
-          <BlurredField active={blurred}>
-            <p className="text-base font-bold">{seller.state ?? '——'}</p>
-          </BlurredField>
+            <p className="text-base font-bold">{seller.state ?? 'Florida'}</p>
         </div>
       </div>
 
@@ -92,10 +90,10 @@ export default function SellerCard({ seller, blurred = false }: SellerCardProps)
       {/* Years + Employees */}
       <div className="flex items-center justify-between text-xs opacity-70 pt-1 border-t border-white/10">
         <BlurredField active={blurred}>
-          <span>{seller.years_in_business != null ? `${seller.years_in_business} yrs` : '——'}</span>
+          <span>{seller.years_in_business != null ? `${seller.years_in_business} yrs` : 'Florida'}</span>
         </BlurredField>
         <BlurredField active={blurred}>
-          <span>{seller.employee_count != null ? `${seller.employee_count} employees` : '——'}</span>
+          <span>{seller.employee_count != null ? `${seller.employee_count} employees` : 'Florida'}</span>
         </BlurredField>
       </div>
 

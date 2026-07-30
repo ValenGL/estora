@@ -37,7 +37,7 @@ export default function Menu() {
             Home
           </Link>
         </li>
-        {effectiveRole === 'broker' && (
+        {(effectiveRole === 'broker' || effectiveRole === 'buyer') && (
           <li>
             <Link
               className={`link ${pathname === "/dashboard" ? "active" : ""}`}
