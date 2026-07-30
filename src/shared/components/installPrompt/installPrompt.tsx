@@ -39,7 +39,7 @@ const InstallPrompt = () => {
       onClose={closeAlert}
       animate='fadeInDown'
       closable={true}
-      classNames='u-bgcolor-estora-super u-color-estora-black rounded-lg mx-4'
+      classNames='u-bgcolor-estora-white u-color-estora-black rounded-lg mx-4'
     >
       <h3 className='text-md font-semibold'>
         We recommend you install Brokerage
