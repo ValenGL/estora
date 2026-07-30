@@ -13,6 +13,8 @@ const ROLE_COLORS: Record<Role, string> = {
 };
 
 export default function DebugPanel() {
+  if (process.env.NODE_ENV === 'production') return null;
+
   const { role, effectiveRole, setDebugRole } = useAuth();
   const isOverriding = effectiveRole !== role;
 
