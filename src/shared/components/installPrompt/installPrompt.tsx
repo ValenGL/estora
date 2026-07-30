@@ -42,18 +42,16 @@ const InstallPrompt = () => {
       classNames='u-bgcolor-estora-super u-color-estora-black rounded-lg mx-4'
     >
       <h3 className='text-md font-semibold'>
-        Te recomendamos instalar Estora
+        We recommend you install Brokerage
       </h3>
       {isIOS ? (
         <p className='mt-2 text-sm'>
-          Para instalar esta app en tu iOS, toca el botón de{" "}
-          <strong>compartir</strong> y selecciona{" "}
-          <strong>&quot;Agregar a pantalla de inicio&quot;</strong>.
+          To install this app on your iOS, tap the <strong>share</strong> button and select{" "}
+          <strong>&quot;Add to Home Screen&quot;</strong>.
         </p>
       ) : (
         <p className='mt-2 text-sm'>
-          Para instalar esta app, usa la opción de tu navegador para agregar a
-          la pantalla de inicio.
+          To install this app, use your browser's option to add it to the home screen.
         </p>
       )}
     </Alert>
