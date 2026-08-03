@@ -33,6 +33,8 @@ export interface Seller {
   management_type: ManagementType | null;
   asking_price: number | null;
   status: SellerStatus;
+  phone: string | null;
+  website: string | null;
   created_at: string;
   updated_at: string;
 }
