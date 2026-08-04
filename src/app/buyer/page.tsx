@@ -1,6 +1,5 @@
 "use client";
 
-import Button from "../../shared/components/button/button";
 import { useAuth } from "../utils/isAuth";
 
 const steps = [
@@ -38,16 +37,6 @@ const Buyer = () => {
           </p>
         </div>
       </article>
-
-      <article className='container p-4 sm:p-6 animate-fadeInUp'>
-        <div className='flex flex-col items-start gap-3 max-w-xs'>
-          <Button version='primary' text='Start Buyer Onboarding' />
-          <p className='text-sm opacity-60'>
-            All conversations are confidential and tailored to your acquisition goals.
-          </p>
-        </div>
-      </article>
-
       <article className='container p-4 sm:p-6 animate-fadeInUp'>
         <h2 className='text-3xl pb-4'>Why Acquisition Matters</h2>
         <p className='text-lg max-w-2xl leading-relaxed opacity-90 pb-6'>

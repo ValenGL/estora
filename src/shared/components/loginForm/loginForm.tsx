@@ -156,7 +156,7 @@ const LoginForm = () => {
             <span>Email</span>
           </label>
           <input
-            className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
+            className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100'
             id='email'
             type='email'
             required
@@ -180,7 +180,7 @@ const LoginForm = () => {
             <span>Password</span>
           </label>
           <input
-            className='px-3 py-1 mb-8 lg:mb-5 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
+            className='px-3 py-1 mb-8 lg:mb-5 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100'
             id='password'
             type='password'
             required

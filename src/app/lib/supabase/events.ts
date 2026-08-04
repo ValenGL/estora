@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { EntityType } from '../types';
+import type { EntityType, BrokerEvent } from '../types';
 
 export const logEvent = async (
   entityType: EntityType,
@@ -18,4 +18,28 @@ export const logEvent = async (
   });
 
   if (error) throw error;
+};
+
+export const logProfileUpdate = async (
+  entityType: 'seller' | 'buyer',
+  entityId: string,
+  changes: { field: string; old: unknown; new: unknown }[]
+): Promise<void> => {
+  if (changes.length === 0) return;
+  await logEvent(entityType, entityId, 'updated', { changes });
+};
+
+export const getProfileHistory = async (
+  entityType: 'seller' | 'buyer',
+  entityId: string
+): Promise<BrokerEvent[]> => {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('entity_type', entityType)
+    .eq('entity_id', entityId)
+    .order('created_at', { ascending: false })
+    .limit(10);
+  if (error) throw error;
+  return data as BrokerEvent[];
 };

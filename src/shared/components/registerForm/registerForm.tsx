@@ -25,12 +25,12 @@ const RegisterForm: React.FC = () => {
     const passwordConfirm = passwordConfirmRef.current?.value;
 
     if (!email || !password || !passwordConfirm) {
-      setError("Todos los campos son requeridos");
+      setError("All fields are required");
       return;
     }
 
     if (password !== passwordConfirm) {
-      setError("Las contraseñas no coinciden");
+      setError("Passwords do not match");
       return;
     }
 
@@ -74,12 +74,12 @@ const RegisterForm: React.FC = () => {
         </div>
         {error && <span className='text-red-500'>Error: {error}</span>}
         <form className='flex flex-col' onSubmit={handleSubmit}>
-          <div className='grid pb-2'>
+          <div className='flex flex-col mb-2'>
             <label className='pr-4' htmlFor='email'>
               <span>Email</span>
             </label>
             <input
-              className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
+              className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100'
               id='email'
               type='email'
               required
@@ -88,12 +88,12 @@ const RegisterForm: React.FC = () => {
               disabled={loading}
             />
           </div>
-          <div className='grid pb-2'>
+          <div className='flex flex-col mb-2'>
             <label className='pr-4' htmlFor='password'>
               <span>Password</span>
             </label>
             <input
-              className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
+              className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100'
               id='password'
               type='password'
               required
@@ -102,12 +102,12 @@ const RegisterForm: React.FC = () => {
               disabled={loading}
             />
           </div>
-          <div className='grid pb-2'>
+          <div className='flex flex-col mb-2'>
             <label className='pr-4' htmlFor='confirmPassword'>
               <span>Confirm password</span>
             </label>
             <input
-              className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100 sm:col-span-3'
+              className='px-3 py-1 border border-gray-300 u-color-estora-black rounded-md focus:outline-solid focus:border-green-100'
               id='confirmPassword'
               type='password'
               required

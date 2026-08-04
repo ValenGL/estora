@@ -4,8 +4,9 @@
   gap: 2rem;
   max-width: 720px;
   margin: 0 auto;
-  padding: 2rem 1rem;
-  min-height: 100dvh;
+  padding: 0 1rem;
+  padding-bottom: 2rem;
+  min-height: calc(100vh - 146px - 188px);
 }
 
 .assessment-progress {

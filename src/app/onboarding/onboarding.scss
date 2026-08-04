@@ -1,7 +1,8 @@
 .onboarding-role-select {
   display: flex;
-  height: 100dvh;
+  height: calc(100vh - 146px - 188px);
   position: relative;
+  padding: 24px;
 }
 
 .onboarding-panel {
@@ -51,7 +52,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100dvh;
+  height: calc(100vh - 146px - 188px);
+  padding: 0 1rem;
+  padding-bottom: 2rem;
   gap: 1.25rem;
 
   h2 {

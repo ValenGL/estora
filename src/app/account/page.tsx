@@ -6,6 +6,7 @@ import { useAuth } from "../utils/isAuth";
 import { supabase } from "../lib/supabase/supabase";
 import { getOwnSeller, updateSeller } from "../lib/supabase/sellers";
 import { getOwnBuyer, updateBuyer } from "../lib/supabase/buyers";
+import { logProfileUpdate, getProfileHistory } from "../lib/supabase/events";
 import { US_STATES } from "../lib/data/usStates";
 import Loader from "../../shared/components/loader/loader";
 import ProtectedRoute from "../utils/protectedRoute";
@@ -18,6 +19,7 @@ import type {
   BuyerBusinessType,
   BuyerWorkType,
   ManagementPreference,
+  BrokerEvent,
 } from "../lib/types";
 import "./account.scss";
 
@@ -112,6 +114,100 @@ function buyerToForm(b: Buyer): BuyerForm {
   };
 }
 
+// ---- Change history helpers ----
+
+const FIELD_LABELS: Record<string, string> = {
+  company_name: "Business name",
+  annual_revenue: "Annual revenue",
+  ebitda: "EBITDA",
+  state: "State",
+  employee_count: "Employees",
+  years_in_business: "Years in business",
+  business_type: "Business type",
+  work_type: "Work type",
+  software: "Software",
+  management_type: "Management",
+  phone: "Phone",
+  website: "Website",
+  organization_name: "Organization",
+  revenue_min: "Min revenue",
+  revenue_max: "Max revenue",
+  ebitda_min: "Min EBITDA",
+  ebitda_max: "Max EBITDA",
+  target_states: "Target states",
+  employee_min: "Min employees",
+  employee_max: "Max employees",
+  preferred_software: "Preferred software",
+  management_preference: "Management preference",
+};
+
+const MONEY_FIELDS = new Set([
+  "annual_revenue",
+  "ebitda",
+  "revenue_min",
+  "revenue_max",
+  "ebitda_min",
+  "ebitda_max",
+]);
+
+function formatHistoryValue(field: string, v: unknown): string {
+  if (v === null || v === undefined) return "—";
+  if (MONEY_FIELDS.has(field)) return formatMoney(v as number);
+  if (field === "state") return stateLabel(v as string);
+  if (field === "target_states")
+    return (v as string[])
+      .slice()
+      .sort()
+      .join(", ");
+  if (typeof v === "number") return String(v);
+  if (typeof v === "string")
+    return v.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
+  return String(v);
+}
+
+function ChangeHistory({ history }: { history: BrokerEvent[] }) {
+  if (history.length === 0) return null;
+  return (
+    <div className="account-history">
+      <p className="account-history__heading">Change history</p>
+      {history.map((event) => {
+        const changes = (
+          (event.metadata?.changes ?? []) as {
+            field: string;
+            old: unknown;
+            new: unknown;
+          }[]
+        ).filter((c) => c.field);
+        if (changes.length === 0) return null;
+        return (
+          <div key={event.id} className="account-history__entry">
+            <p className="account-history__timestamp">
+              {new Date(event.created_at).toLocaleString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+              })}
+            </p>
+            {changes.map((c) => (
+              <div key={c.field} className="account-history__row">
+                <span className="account-history__field">
+                  {FIELD_LABELS[c.field] ?? c.field}
+                </span>
+                <span className="account-history__value">
+                  {formatHistoryValue(c.field, c.old)} →{" "}
+                  {formatHistoryValue(c.field, c.new)}
+                </span>
+              </div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ---- SellerSection ----
 
 function SellerSection({
@@ -125,6 +221,13 @@ function SellerSection({
   const [form, setForm] = useState<SellerForm>(sellerToForm(seller));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<BrokerEvent[]>([]);
+
+  useEffect(() => {
+    getProfileHistory("seller", seller.id)
+      .then(setHistory)
+      .catch(() => {});
+  }, [seller.id]);
 
   const startEdit = () => {
     setForm(sellerToForm(seller));
@@ -163,20 +266,71 @@ function SellerSection({
     setSaving(true);
     setError(null);
     try {
+      const parsedRevenue = parseFloat(form.annual_revenue) * 1_000_000;
+      const parsedEbitda = parseFloat(form.ebitda) * 100_000;
+      const parsedEmployees = parseInt(form.employee_count, 10);
+      const parsedYears = parseInt(form.years_in_business, 10);
+      const trimmedPhone = form.phone.trim() || null;
+      const trimmedWebsite = form.website.trim() || null;
+
+      const changes: { field: string; old: unknown; new: unknown }[] = [];
+      if (seller.company_name !== form.company_name.trim())
+        changes.push({ field: "company_name", old: seller.company_name, new: form.company_name.trim() });
+      if (seller.annual_revenue !== parsedRevenue)
+        changes.push({ field: "annual_revenue", old: seller.annual_revenue, new: parsedRevenue });
+      if (seller.ebitda !== parsedEbitda)
+        changes.push({ field: "ebitda", old: seller.ebitda, new: parsedEbitda });
+      if (seller.state !== form.state)
+        changes.push({ field: "state", old: seller.state, new: form.state });
+      if (seller.employee_count !== parsedEmployees)
+        changes.push({ field: "employee_count", old: seller.employee_count, new: parsedEmployees });
+      if (seller.years_in_business !== parsedYears)
+        changes.push({ field: "years_in_business", old: seller.years_in_business, new: parsedYears });
+      if (seller.business_type !== form.business_type)
+        changes.push({ field: "business_type", old: seller.business_type, new: form.business_type });
+      if (seller.work_type !== form.work_type)
+        changes.push({ field: "work_type", old: seller.work_type, new: form.work_type });
+      if (seller.software !== form.software.trim())
+        changes.push({ field: "software", old: seller.software, new: form.software.trim() });
+      if (seller.management_type !== form.management_type)
+        changes.push({ field: "management_type", old: seller.management_type, new: form.management_type });
+      if ((seller.phone ?? null) !== trimmedPhone)
+        changes.push({ field: "phone", old: seller.phone, new: trimmedPhone });
+      if ((seller.website ?? null) !== trimmedWebsite)
+        changes.push({ field: "website", old: seller.website, new: trimmedWebsite });
+
       const updated = await updateSeller(seller.id, {
         company_name: form.company_name.trim(),
-        annual_revenue: parseFloat(form.annual_revenue) * 1_000_000,
-        ebitda: parseFloat(form.ebitda) * 100_000,
+        annual_revenue: parsedRevenue,
+        ebitda: parsedEbitda,
         state: form.state,
-        employee_count: parseInt(form.employee_count, 10),
-        years_in_business: parseInt(form.years_in_business, 10),
+        employee_count: parsedEmployees,
+        years_in_business: parsedYears,
         business_type: form.business_type as BusinessType,
         work_type: form.work_type as WorkType,
         software: form.software.trim(),
         management_type: form.management_type as ManagementType,
-        phone: form.phone.trim() || null,
-        website: form.website.trim() || null,
+        phone: trimmedPhone,
+        website: trimmedWebsite,
       });
+
+      logProfileUpdate("seller", seller.id, changes);
+
+      if (changes.length > 0) {
+        setHistory((prev) => [
+          {
+            id: crypto.randomUUID(),
+            actor_id: null,
+            entity_type: "seller",
+            entity_id: seller.id,
+            action: "updated",
+            metadata: { changes },
+            created_at: new Date().toISOString(),
+          },
+          ...prev,
+        ]);
+      }
+
       onUpdate(updated);
       setEditing(false);
     } catch {
@@ -267,6 +421,7 @@ function SellerSection({
             </div>
           </div>
         </div>
+        <ChangeHistory history={history} />
       </div>
     );
   }
@@ -473,6 +628,7 @@ function SellerSection({
           </button>
         </div>
       </div>
+      <ChangeHistory history={history} />
     </div>
   );
 }
@@ -490,6 +646,13 @@ function BuyerSection({
   const [form, setForm] = useState<BuyerForm>(buyerToForm(buyer));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<BrokerEvent[]>([]);
+
+  useEffect(() => {
+    getProfileHistory("buyer", buyer.id)
+      .then(setHistory)
+      .catch(() => {});
+  }, [buyer.id]);
 
   const startEdit = () => {
     setForm(buyerToForm(buyer));
@@ -549,12 +712,45 @@ function BuyerSection({
     setSaving(true);
     setError(null);
     try {
+      const parsedRevMin = revMin * 1_000_000;
+      const parsedRevMax = revMax * 1_000_000;
+      const parsedEbitdaMin = ebitdaMin * 100_000;
+      const parsedEbitdaMax = ebitdaMax * 100_000;
+      const sortedFormStates = [...form.target_states].sort().join(",");
+      const sortedBuyerStates = [...(buyer.target_states ?? [])].sort().join(",");
+
+      const changes: { field: string; old: unknown; new: unknown }[] = [];
+      if (buyer.organization_name !== form.organization_name.trim())
+        changes.push({ field: "organization_name", old: buyer.organization_name, new: form.organization_name.trim() });
+      if (buyer.revenue_min !== parsedRevMin)
+        changes.push({ field: "revenue_min", old: buyer.revenue_min, new: parsedRevMin });
+      if (buyer.revenue_max !== parsedRevMax)
+        changes.push({ field: "revenue_max", old: buyer.revenue_max, new: parsedRevMax });
+      if (buyer.ebitda_min !== parsedEbitdaMin)
+        changes.push({ field: "ebitda_min", old: buyer.ebitda_min, new: parsedEbitdaMin });
+      if (buyer.ebitda_max !== parsedEbitdaMax)
+        changes.push({ field: "ebitda_max", old: buyer.ebitda_max, new: parsedEbitdaMax });
+      if (sortedFormStates !== sortedBuyerStates)
+        changes.push({ field: "target_states", old: buyer.target_states, new: form.target_states });
+      if (buyer.business_type !== form.business_type)
+        changes.push({ field: "business_type", old: buyer.business_type, new: form.business_type });
+      if (buyer.work_type !== form.work_type)
+        changes.push({ field: "work_type", old: buyer.work_type, new: form.work_type });
+      if (buyer.employee_min !== empMin)
+        changes.push({ field: "employee_min", old: buyer.employee_min, new: empMin });
+      if (buyer.employee_max !== empMax)
+        changes.push({ field: "employee_max", old: buyer.employee_max, new: empMax });
+      if (buyer.preferred_software !== form.preferred_software.trim())
+        changes.push({ field: "preferred_software", old: buyer.preferred_software, new: form.preferred_software.trim() });
+      if (buyer.management_preference !== form.management_preference)
+        changes.push({ field: "management_preference", old: buyer.management_preference, new: form.management_preference });
+
       const updated = await updateBuyer(buyer.id, {
         organization_name: form.organization_name.trim(),
-        revenue_min: revMin * 1_000_000,
-        revenue_max: revMax * 1_000_000,
-        ebitda_min: ebitdaMin * 100_000,
-        ebitda_max: ebitdaMax * 100_000,
+        revenue_min: parsedRevMin,
+        revenue_max: parsedRevMax,
+        ebitda_min: parsedEbitdaMin,
+        ebitda_max: parsedEbitdaMax,
         target_states: form.target_states,
         business_type: form.business_type as BuyerBusinessType,
         work_type: form.work_type as BuyerWorkType,
@@ -563,6 +759,24 @@ function BuyerSection({
         preferred_software: form.preferred_software.trim(),
         management_preference: form.management_preference as ManagementPreference,
       });
+
+      logProfileUpdate("buyer", buyer.id, changes);
+
+      if (changes.length > 0) {
+        setHistory((prev) => [
+          {
+            id: crypto.randomUUID(),
+            actor_id: null,
+            entity_type: "buyer",
+            entity_id: buyer.id,
+            action: "updated",
+            metadata: { changes },
+            created_at: new Date().toISOString(),
+          },
+          ...prev,
+        ]);
+      }
+
       onUpdate(updated);
       setEditing(false);
     } catch {
@@ -644,6 +858,7 @@ function BuyerSection({
             </div>
           </div>
         </div>
+        <ChangeHistory history={history} />
       </div>
     );
   }
@@ -756,7 +971,7 @@ function BuyerSection({
           </div>
         </div>
         <div className="account-edit-field">
-          <label>Tipo de negocio *</label>
+          <label>Business type *</label>
           <div className="account-radio-group">
             {businessTypeOptions.map((opt) => (
               <button
@@ -776,7 +991,7 @@ function BuyerSection({
           </div>
         </div>
         <div className="account-edit-field">
-          <label>Tipo de trabajo *</label>
+          <label>Work type *</label>
           <div className="account-radio-group">
             {workTypeOptions.map((opt) => (
               <button
@@ -859,7 +1074,7 @@ function BuyerSection({
             disabled={!isValid || saving}
             type="button"
           >
-            {saving ? "Saving..." : "Guardar"}
+            {saving ? "Saving..." : "Save"}
           </button>
           <button
             className="account-btn account-btn--ghost"
@@ -867,10 +1082,11 @@ function BuyerSection({
             disabled={saving}
             type="button"
           >
-            Cancelar
+            Cancel
           </button>
         </div>
       </div>
+      <ChangeHistory history={history} />
     </div>
   );
 }
