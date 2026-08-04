@@ -25,6 +25,22 @@ interface WizardForm {
 
 const TOTAL_STEPS = 5;
 
+function Progress({ step }: { step: number }) {
+  return (
+    <div className="buyer-progress">
+      <span className="buyer-progress__label">
+        Step {step} of {TOTAL_STEPS}
+      </span>
+      <div className="buyer-progress__bar">
+        <div
+          className="buyer-progress__fill"
+          style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
 const BuyerOnboardingPage = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -107,8 +123,8 @@ const BuyerOnboardingPage = () => {
   const isStep2Valid =
     !isNaN(revMin) && !isNaN(revMax) &&
     !isNaN(ebitdaMin) && !isNaN(ebitdaMax) &&
-    revMin >= 0 && revMax >= 0 &&
-    ebitdaMin >= 0 && ebitdaMax >= 0 &&
+    revMin >= 0 && revMax > 0 &&
+    ebitdaMin >= 0 && ebitdaMax > 0 &&
     revMin <= revMax && ebitdaMin <= ebitdaMax;
   const isStep3Valid = form.target_states.length >= 1;
   const isStep4Valid =
@@ -119,25 +135,11 @@ const BuyerOnboardingPage = () => {
     form.preferred_software.trim() !== "" &&
     form.management_preference !== "";
 
-  const Progress = () => (
-    <div className="buyer-progress">
-      <span className="buyer-progress__label">
-        Step {step} of {TOTAL_STEPS}
-      </span>
-      <div className="buyer-progress__bar">
-        <div
-          className="buyer-progress__fill"
-          style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
-        />
-      </div>
-    </div>
-  );
-
   // Step 1: Organization
   if (step === 1) {
     return (
       <div className="buyer-onboarding-step">
-        <Progress />
+        <Progress step={step} />
         <h2 className="buyer-step-title">Your organization</h2>
         <div className="buyer-field">
           <label htmlFor="organization_name">Organization name *</label>
@@ -172,7 +174,7 @@ const BuyerOnboardingPage = () => {
   if (step === 2) {
     return (
       <div className="buyer-onboarding-step">
-        <Progress />
+        <Progress step={step} />
         <h2 className="buyer-step-title">Revenue & EBITDA range</h2>
         <div className="buyer-field-row">
           <div className="buyer-field">
@@ -255,7 +257,7 @@ const BuyerOnboardingPage = () => {
   if (step === 3) {
     return (
       <div className="buyer-onboarding-step">
-        <Progress />
+        <Progress step={step} />
         <h2 className="buyer-step-title">Target states</h2>
         <p style={{ opacity: 0.6, fontSize: "0.9rem" }}>
           Select at least one state where you want to acquire.
@@ -311,7 +313,7 @@ const BuyerOnboardingPage = () => {
 
     return (
       <div className="buyer-onboarding-step">
-        <Progress />
+        <Progress step={step} />
         <h2 className="buyer-step-title">Business profile</h2>
 
         <div className="buyer-field">
@@ -414,7 +416,7 @@ const BuyerOnboardingPage = () => {
 
     return (
       <div className="buyer-onboarding-step">
-        <Progress />
+        <Progress step={step} />
         <h2 className="buyer-step-title">Operational preferences</h2>
 
         <div className="buyer-field">
