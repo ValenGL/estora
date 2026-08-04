@@ -23,6 +23,7 @@ export default function Onboarding() {
   const [step, setStep] = useState<1 | 2>(1);
   const [panelLoading, setPanelLoading] = useState(false);
   const [panelError, setPanelError] = useState("");
+  const [selectedRole, setSelectedRole] = useState<"buyer" | "seller" | null>(null);
 
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -38,6 +39,7 @@ export default function Onboarding() {
     setPanelLoading(true);
     try {
       await updateProfile({ role: chosen });
+      setSelectedRole(chosen);
       setStep(2);
     } catch (err) {
       console.error("Error setting role:", err);
@@ -62,7 +64,11 @@ export default function Onboarding() {
     try {
       await updateProfile({ username });
       await refreshRole();
-      router.push("/");
+      if (selectedRole === "seller") {
+        router.push("/seller/onboarding");
+      } else {
+        router.push("/inicio");
+      }
     } catch (err: any) {
       const isDuplicate =
         err?.code === "23505" ||

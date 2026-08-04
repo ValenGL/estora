@@ -74,3 +74,33 @@ export const deleteSeller = async (id: string): Promise<void> => {
 
   if (error) throw error;
 };
+
+export interface SellerProfileData {
+  company_name: string;
+  annual_revenue: number;
+  ebitda: number;
+  phone: string | null;
+  website: string | null;
+}
+
+export const createSellerProfile = async (data: SellerProfileData): Promise<Seller> => {
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) throw new Error('No authenticated user');
+
+  const { data: seller, error } = await supabase
+    .from('sellers')
+    .insert({
+      profile_id: user.id,
+      company_name: data.company_name,
+      annual_revenue: data.annual_revenue,
+      ebitda: data.ebitda,
+      phone: data.phone,
+      website: data.website,
+      status: 'active',
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return seller as Seller;
+};

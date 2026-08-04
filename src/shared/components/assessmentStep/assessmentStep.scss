@@ -1,0 +1,117 @@
+.assessment-step {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 100dvh;
+}
+
+.assessment-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.5;
+  }
+
+  &__bar {
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--estora-primary, #4A6FA5);
+    transition: width 0.3s ease;
+  }
+}
+
+.assessment-category-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.assessment-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.assessment-question {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  &__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.assessment-option {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--estora-white, #fafafa);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &:hover:not(.assessment-option--selected) {
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  &--selected {
+    border-color: var(--estora-primary, #4A6FA5);
+    background: rgba(74, 111, 165, 0.2);
+    font-weight: 600;
+  }
+}
+
+.assessment-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  margin-top: auto;
+}
+
+.assessment-btn {
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: var(--estora-white, #fafafa);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background: var(--estora-primary, #4A6FA5);
+    border-color: var(--estora-primary, #4A6FA5);
+    font-weight: 600;
+  }
+}
