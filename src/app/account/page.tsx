@@ -574,8 +574,7 @@ function BuyerSection({
 
   const fmtRevenue = (v: number | null) =>
     v !== null ? `$${(v / 1_000_000).toFixed(1)}M` : "—";
-  const fmtEbitda = (v: number | null) =>
-    v !== null ? `$${(v / 100_000).toFixed(1)} ×100K` : "—";
+  const fmtEbitda = formatMoney;
 
   if (!editing) {
     return (
