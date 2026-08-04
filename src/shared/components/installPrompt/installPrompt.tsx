@@ -51,7 +51,7 @@ const InstallPrompt = () => {
         </p>
       ) : (
         <p className='mt-2 text-sm'>
-          To install this app, use your browser's option to add it to the home screen.
+          To install this app, use your browser&apos;s option to add it to the home screen.
         </p>
       )}
     </Alert>
