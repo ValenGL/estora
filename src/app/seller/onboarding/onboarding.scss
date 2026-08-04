@@ -5,7 +5,6 @@
   max-width: 480px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  min-height: 100dvh;
 
   h2 {
     font-size: 1.5rem;
@@ -82,7 +81,7 @@
   display: flex;
   gap: 1rem;
 
-  > .seller-onboarding-field {
+  >.seller-onboarding-field {
     flex: 1;
   }
 }
