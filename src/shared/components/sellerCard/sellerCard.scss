@@ -38,6 +38,51 @@
   }
 }
 
+.seller-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0.25rem;
+}
+
+.seller-card-action-btn {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: inherit;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &--danger {
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+
+    &:hover {
+      border-color: #f87171;
+    }
+  }
+
+  &--confirm {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+  }
+}
+
+.seller-card-confirm-text {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  align-self: center;
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
