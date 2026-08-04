@@ -180,7 +180,7 @@ function SellerSection({
       onUpdate(updated);
       setEditing(false);
     } catch {
-      setError("Error al guardar los cambios. Intentá de nuevo.");
+      setError("Failed to save changes. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -190,23 +190,23 @@ function SellerSection({
     return (
       <div className="account-section u-bgcolor-estora-black">
         <div className="account-section__header">
-          <h2 className="account-section__title">Mi negocio</h2>
+          <h2 className="account-section__title">My business</h2>
           <button
             className="account-btn account-btn--ghost"
             onClick={startEdit}
             type="button"
           >
-            Editar
+            Edit
           </button>
         </div>
         <div className="account-fields">
           <div className="account-field">
-            <p className="account-field__label">Nombre del negocio</p>
+            <p className="account-field__label">Business name</p>
             <p className="account-field__value">{seller.company_name}</p>
           </div>
           <div className="account-field-row">
             <div className="account-field">
-              <p className="account-field__label">Revenue anual</p>
+              <p className="account-field__label">Annual revenue</p>
               <p className="account-field__value">
                 {formatMoney(seller.annual_revenue)}
               </p>
@@ -220,27 +220,27 @@ function SellerSection({
           </div>
           <div className="account-field-row">
             <div className="account-field">
-              <p className="account-field__label">Estado</p>
+              <p className="account-field__label">State</p>
               <p className="account-field__value">
                 {stateLabel(seller.state)}
               </p>
             </div>
             <div className="account-field">
-              <p className="account-field__label">Empleados</p>
+              <p className="account-field__label">Employees</p>
               <p className="account-field__value">
                 {seller.employee_count ?? "—"}
               </p>
             </div>
           </div>
           <div className="account-field">
-            <p className="account-field__label">Años en el negocio</p>
+            <p className="account-field__label">Years in business</p>
             <p className="account-field__value">
               {seller.years_in_business ?? "—"}
             </p>
           </div>
           <div className="account-field">
             <p className="account-field__label">
-              Tipo de negocio / trabajo / gestión
+              Business / work / management type
             </p>
             <div className="account-chips">
               <span className="account-chip">
@@ -258,7 +258,7 @@ function SellerSection({
           </div>
           <div className="account-field-row">
             <div className="account-field">
-              <p className="account-field__label">Teléfono</p>
+              <p className="account-field__label">Phone</p>
               <p className="account-field__value">{seller.phone ?? "—"}</p>
             </div>
             <div className="account-field">
@@ -274,11 +274,11 @@ function SellerSection({
   return (
     <div className="account-section u-bgcolor-estora-black">
       <div className="account-section__header">
-        <h2 className="account-section__title">Mi negocio</h2>
+        <h2 className="account-section__title">My business</h2>
       </div>
       <div className="account-edit-form">
         <div className="account-edit-field">
-          <label htmlFor="company_name">Nombre del negocio *</label>
+          <label htmlFor="company_name">Business name *</label>
           <input
             id="company_name"
             type="text"
@@ -289,7 +289,7 @@ function SellerSection({
         </div>
         <div className="account-edit-row">
           <div className="account-edit-field">
-            <label htmlFor="annual_revenue">Revenue (millones) *</label>
+            <label htmlFor="annual_revenue">Revenue (millions) *</label>
             <input
               id="annual_revenue"
               type="number"
@@ -301,7 +301,7 @@ function SellerSection({
             />
           </div>
           <div className="account-edit-field">
-            <label htmlFor="ebitda">EBITDA (cien miles) *</label>
+            <label htmlFor="ebitda">EBITDA (hundred thousands) *</label>
             <input
               id="ebitda"
               type="number"
@@ -314,14 +314,14 @@ function SellerSection({
           </div>
         </div>
         <div className="account-edit-field">
-          <label htmlFor="state">Estado *</label>
+          <label htmlFor="state">State *</label>
           <select
             id="state"
             value={form.state}
             onChange={setField("state")}
             disabled={saving}
           >
-            <option value="">Seleccionar estado...</option>
+            <option value="">Select a state...</option>
             {US_STATES.map((s) => (
               <option key={s.code} value={s.code}>
                 {s.label}
@@ -331,7 +331,7 @@ function SellerSection({
         </div>
         <div className="account-edit-row">
           <div className="account-edit-field">
-            <label htmlFor="employee_count">Empleados *</label>
+            <label htmlFor="employee_count">Employees *</label>
             <input
               id="employee_count"
               type="number"
@@ -343,7 +343,7 @@ function SellerSection({
             />
           </div>
           <div className="account-edit-field">
-            <label htmlFor="years_in_business">Años en el negocio *</label>
+            <label htmlFor="years_in_business">Years in business *</label>
             <input
               id="years_in_business"
               type="number"
@@ -356,7 +356,7 @@ function SellerSection({
           </div>
         </div>
         <div className="account-edit-field">
-          <label>Tipo de negocio *</label>
+          <label>Business type *</label>
           <div className="account-radio-group">
             {(["residential", "commercial", "both"] as BusinessType[]).map(
               (opt) => (
@@ -380,7 +380,7 @@ function SellerSection({
           </div>
         </div>
         <div className="account-edit-field">
-          <label>Tipo de trabajo *</label>
+          <label>Work type *</label>
           <div className="account-radio-group">
             {(["retail", "insurance", "both"] as WorkType[]).map((opt) => (
               <button
@@ -408,7 +408,7 @@ function SellerSection({
           />
         </div>
         <div className="account-edit-field">
-          <label>Gestión *</label>
+          <label>Management *</label>
           <div className="account-radio-group">
             {(
               ["owner_operated", "has_management_team"] as ManagementType[]
@@ -433,7 +433,7 @@ function SellerSection({
         </div>
         <div className="account-edit-row">
           <div className="account-edit-field">
-            <label htmlFor="phone">Teléfono</label>
+            <label htmlFor="phone">Phone</label>
             <input
               id="phone"
               type="tel"
@@ -461,7 +461,7 @@ function SellerSection({
             disabled={!isValid || saving}
             type="button"
           >
-            {saving ? "Guardando..." : "Guardar"}
+            {saving ? "Saving..." : "Save"}
           </button>
           <button
             className="account-btn account-btn--ghost"
@@ -469,7 +469,7 @@ function SellerSection({
             disabled={saving}
             type="button"
           >
-            Cancelar
+            Cancel
           </button>
         </div>
       </div>
@@ -566,51 +566,47 @@ function BuyerSection({
       onUpdate(updated);
       setEditing(false);
     } catch {
-      setError("Error al guardar los cambios. Intentá de nuevo.");
+      setError("Failed to save changes. Please try again.");
     } finally {
       setSaving(false);
     }
   };
 
-  const fmtRevenue = (v: number | null) =>
-    v !== null ? `$${(v / 1_000_000).toFixed(1)}M` : "—";
-  const fmtEbitda = formatMoney;
-
   if (!editing) {
     return (
       <div className="account-section u-bgcolor-estora-black">
         <div className="account-section__header">
-          <h2 className="account-section__title">Mi Buy Box</h2>
+          <h2 className="account-section__title">My Buy Box</h2>
           <button
             className="account-btn account-btn--ghost"
             onClick={startEdit}
             type="button"
           >
-            Editar
+            Edit
           </button>
         </div>
         <div className="account-fields">
           <div className="account-field">
-            <p className="account-field__label">Organización</p>
+            <p className="account-field__label">Organization</p>
             <p className="account-field__value">{buyer.organization_name}</p>
           </div>
           <div className="account-field-row">
             <div className="account-field">
-              <p className="account-field__label">Revenue objetivo</p>
+              <p className="account-field__label">Target revenue</p>
               <p className="account-field__value">
-                {fmtRevenue(buyer.revenue_min)} –{" "}
-                {fmtRevenue(buyer.revenue_max)}
+                {formatMoney(buyer.revenue_min)} –{" "}
+                {formatMoney(buyer.revenue_max)}
               </p>
             </div>
             <div className="account-field">
-              <p className="account-field__label">EBITDA objetivo</p>
+              <p className="account-field__label">Target EBITDA</p>
               <p className="account-field__value">
-                {fmtEbitda(buyer.ebitda_min)} – {fmtEbitda(buyer.ebitda_max)}
+                {formatMoney(buyer.ebitda_min)} – {formatMoney(buyer.ebitda_max)}
               </p>
             </div>
           </div>
           <div className="account-field">
-            <p className="account-field__label">Estados objetivo</p>
+            <p className="account-field__label">Target states</p>
             <div className="account-chips">
               {(buyer.target_states ?? []).map((s) => (
                 <span key={s} className="account-chip">
@@ -621,7 +617,7 @@ function BuyerSection({
           </div>
           <div className="account-field">
             <p className="account-field__label">
-              Tipo de negocio / trabajo / gestión
+              Business / work / management type
             </p>
             <div className="account-chips">
               <span className="account-chip">
@@ -635,13 +631,13 @@ function BuyerSection({
           </div>
           <div className="account-field-row">
             <div className="account-field">
-              <p className="account-field__label">Empleados objetivo</p>
+              <p className="account-field__label">Target employees</p>
               <p className="account-field__value">
                 {buyer.employee_min ?? "—"} – {buyer.employee_max ?? "—"}
               </p>
             </div>
             <div className="account-field">
-              <p className="account-field__label">Software preferido</p>
+              <p className="account-field__label">Preferred software</p>
               <p className="account-field__value">
                 {buyer.preferred_software ?? "—"}
               </p>
@@ -673,11 +669,11 @@ function BuyerSection({
   return (
     <div className="account-section u-bgcolor-estora-black">
       <div className="account-section__header">
-        <h2 className="account-section__title">Mi Buy Box</h2>
+        <h2 className="account-section__title">My Buy Box</h2>
       </div>
       <div className="account-edit-form">
         <div className="account-edit-field">
-          <label htmlFor="organization_name">Organización *</label>
+          <label htmlFor="organization_name">Organization *</label>
           <input
             id="organization_name"
             type="text"
@@ -688,7 +684,7 @@ function BuyerSection({
         </div>
         <div className="account-edit-row">
           <div className="account-edit-field">
-            <label htmlFor="revenue_min">Revenue mín (millones) *</label>
+            <label htmlFor="revenue_min">Min revenue (millions) *</label>
             <input
               id="revenue_min"
               type="number"
@@ -700,7 +696,7 @@ function BuyerSection({
             />
           </div>
           <div className="account-edit-field">
-            <label htmlFor="revenue_max">Revenue máx (millones) *</label>
+            <label htmlFor="revenue_max">Max revenue (millions) *</label>
             <input
               id="revenue_max"
               type="number"
@@ -714,7 +710,7 @@ function BuyerSection({
         </div>
         <div className="account-edit-row">
           <div className="account-edit-field">
-            <label htmlFor="ebitda_min">EBITDA mín (cien miles) *</label>
+            <label htmlFor="ebitda_min">Min EBITDA (hundred thousands) *</label>
             <input
               id="ebitda_min"
               type="number"
@@ -726,7 +722,7 @@ function BuyerSection({
             />
           </div>
           <div className="account-edit-field">
-            <label htmlFor="ebitda_max">EBITDA máx (cien miles) *</label>
+            <label htmlFor="ebitda_max">Max EBITDA (hundred thousands) *</label>
             <input
               id="ebitda_max"
               type="number"
@@ -739,7 +735,7 @@ function BuyerSection({
           </div>
         </div>
         <div className="account-edit-field">
-          <label>Estados objetivo *</label>
+          <label>Target states *</label>
           <div className="account-states-grid">
             {US_STATES.map((s) => (
               <button
@@ -799,7 +795,7 @@ function BuyerSection({
         </div>
         <div className="account-edit-row">
           <div className="account-edit-field">
-            <label htmlFor="employee_min">Empleados mín *</label>
+            <label htmlFor="employee_min">Min employees *</label>
             <input
               id="employee_min"
               type="number"
@@ -811,7 +807,7 @@ function BuyerSection({
             />
           </div>
           <div className="account-edit-field">
-            <label htmlFor="employee_max">Empleados máx *</label>
+            <label htmlFor="employee_max">Max employees *</label>
             <input
               id="employee_max"
               type="number"
@@ -824,7 +820,7 @@ function BuyerSection({
           </div>
         </div>
         <div className="account-edit-field">
-          <label htmlFor="preferred_software">Software preferido *</label>
+          <label htmlFor="preferred_software">Preferred software *</label>
           <input
             id="preferred_software"
             type="text"
@@ -834,7 +830,7 @@ function BuyerSection({
           />
         </div>
         <div className="account-edit-field">
-          <label>Preferencia de gestión *</label>
+          <label>Management preference *</label>
           <div className="account-radio-group">
             {mgmtOptions.map((opt) => (
               <button
@@ -863,7 +859,7 @@ function BuyerSection({
             disabled={!isValid || saving}
             type="button"
           >
-            {saving ? "Guardando..." : "Guardar"}
+            {saving ? "Saving..." : "Guardar"}
           </button>
           <button
             className="account-btn account-btn--ghost"
@@ -930,21 +926,21 @@ const AccountPage = () => {
       <article className="container">
         <div className="account-page">
           <div className="account-email">
-            <p className="account-email__label">Email de la cuenta</p>
+            <p className="account-email__label">Account email</p>
             <p className="account-email__value">{email}</p>
           </div>
 
           {noRecord && (
             <div className="account-banner">
               <p className="account-banner__text">
-                No tenés un perfil completo.
+                Your profile is incomplete.
               </p>
               <button
                 className="account-banner__link"
                 onClick={() => router.push(onboardingPath)}
                 type="button"
               >
-                Completar perfil →
+                Complete your profile →
               </button>
             </div>
           )}
