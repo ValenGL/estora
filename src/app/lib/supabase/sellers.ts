@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Seller } from '../types';
+import type { Seller, BusinessType, WorkType, ManagementType } from '../types';
 
 type SellerInput = Omit<Seller, 'id' | 'profile_id' | 'created_at' | 'updated_at' | 'status'>;
 type SellerUpdate = Partial<Omit<Seller, 'id' | 'profile_id' | 'created_at' | 'updated_at'>>;
@@ -81,6 +81,13 @@ export interface SellerProfileData {
   ebitda: number;
   phone: string | null;
   website: string | null;
+  state: string;
+  employee_count: number;
+  years_in_business: number;
+  business_type: BusinessType;
+  work_type: WorkType;
+  software: string;
+  management_type: ManagementType;
 }
 
 export const createSellerProfile = async (data: SellerProfileData): Promise<Seller> => {
@@ -97,6 +104,13 @@ export const createSellerProfile = async (data: SellerProfileData): Promise<Sell
       phone: data.phone,
       website: data.website,
       status: 'active',
+      state: data.state,
+      employee_count: data.employee_count,
+      years_in_business: data.years_in_business,
+      business_type: data.business_type,
+      work_type: data.work_type,
+      software: data.software,
+      management_type: data.management_type,
     })
     .select()
     .single();
