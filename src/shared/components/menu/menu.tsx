@@ -11,6 +11,13 @@ export default function Menu() {
   const { isLoggedIn, effectiveRole } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
+  const isOnboarding =
+    pathname === "/onboarding" ||
+    pathname.startsWith("/seller/onboarding") ||
+    pathname.startsWith("/buyer/onboarding");
+
+  if (isOnboarding) return null;
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
