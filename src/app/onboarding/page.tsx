@@ -32,8 +32,10 @@ export default function Onboarding() {
   useEffect(() => {
     if (isLoading) return;
     if (!user) { router.push("/"); return; }
-    if (role !== "pending" && role !== null) router.push("/");
-  }, [isLoading, user, role, router]);
+    // Only redirect away if on step 1 — once the user selects a role (step 2),
+    // their role in DB is no longer "pending" so the guard must not fire.
+    if (step === 1 && role !== "pending" && role !== null) router.push("/");
+  }, [isLoading, user, role, router, step]);
 
   const handleRoleSelect = async (chosen: "buyer" | "seller") => {
     setPanelLoading(true);
@@ -67,7 +69,7 @@ export default function Onboarding() {
       if (selectedRole === "seller") {
         router.push("/seller/onboarding");
       } else {
-        router.push("/inicio");
+        router.push("/buyer/onboarding");
       }
     } catch (err: any) {
       const isDuplicate =
