@@ -68,7 +68,7 @@ const RegisterForm: React.FC = () => {
       <h2 className='text-4xl sm:text-6xl caveat'>
         Join the best marketplace for roofing businesses
       </h2>
-      <section className='u-bgcolor-estora-dark shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] my-6 p-6 rounded-2xl'>
+      <section className='u-bgcolor-estora-dark shadow-[inset_0_3px_3px_0_rgba(0,0,0,0.15)] my-6 p-6 w-full rounded-2xl'>
         <div className='pb-4'>
           <h3 className='text-2xl'>Register in Brokerage</h3>
         </div>
