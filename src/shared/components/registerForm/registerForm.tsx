@@ -1,10 +1,11 @@
 "use client";
 
-import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { signup } from "./../../../app/lib/supabase/supabase_manage";
 import Button from "./../button/button";
+
+const RECAPTCHA_SITE_KEY = "6LfEX3QtAAAAAG6arHcjbcMh4aFHPw8IF5ZudC5X";
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
@@ -15,12 +16,6 @@ const RegisterForm: React.FC = () => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const captchaRef = useRef<any>(null);
-
-  const handleVerify = (token: string) => {
-    setCaptchaToken(token);
-  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,25 +34,31 @@ const RegisterForm: React.FC = () => {
       return;
     }
 
-    if (!captchaToken) {
-      setError("Por favor, completa el CAPTCHA");
-      return;
-    }
-
     try {
       setLoading(true);
       setError("");
 
+      await new Promise<void>((resolve) => window.grecaptcha.enterprise.ready(resolve));
+      const token = await window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action: "REGISTER" });
+
+      const verify = await fetch('/api/recaptcha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, action: 'REGISTER' }),
+      });
+      if (!verify.ok) {
+        const errData = await verify.json().catch(() => ({}));
+        throw new Error(errData.detail || errData.error || 'Bot verification failed. Please try again.');
+      }
+
       const username = email.split("@")[0];
-      await signup(email, password, username, "pending", captchaToken);
+      await signup(email, password, username, "pending");
 
       router.push("/onboarding");
     } catch (err: any) {
       setError(err.message || "Error al crear la cuenta");
     } finally {
       setLoading(false);
-      captchaRef.current?.resetCaptcha();
-      setCaptchaToken(null);
     }
   }
 
@@ -113,13 +114,6 @@ const RegisterForm: React.FC = () => {
               placeholder='Enter your password again'
               ref={passwordConfirmRef}
               disabled={loading}
-            />
-          </div>
-          <div className='py-4 flex justify-center'>
-            <HCaptcha
-              ref={captchaRef}
-              sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-              onVerify={handleVerify}
             />
           </div>
           <div className='my-4'>

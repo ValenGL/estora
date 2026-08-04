@@ -41,6 +41,8 @@ export default function RootLayout({
             href='https://fonts.gstatic.com'
             crossOrigin='anonymous'
           />
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+          <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfEX3QtAAAAAG6arHcjbcMh4aFHPw8IF5ZudC5X" async defer />
         </head>
         <body>
           <AuthProvider>

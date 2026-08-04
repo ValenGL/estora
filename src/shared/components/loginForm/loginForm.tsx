@@ -1,6 +1,5 @@
 "use client";
 
-import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Alert from "../alert/alert";
@@ -11,10 +10,18 @@ import { useAuth } from "./../../../app/utils/isAuth";
 
 import "./loginForm.scss";
 
+const RECAPTCHA_SITE_KEY = "6LfEX3QtAAAAAG6arHcjbcMh4aFHPw8IF5ZudC5X";
+
 declare global {
   interface Window {
     google?: any;
     handleSignInWithGoogle: (response: any) => void;
+    grecaptcha: {
+      enterprise: {
+        ready: (cb: () => void) => void;
+        execute: (siteKey: string, options: { action: string }) => Promise<string>;
+      };
+    };
   }
 }
 
@@ -26,8 +33,6 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const captchaRef = useRef<any>(null);
   const nonceRef = useRef<string | null>(null);
   const { isLoggedIn, role } = useAuth();
 
@@ -92,10 +97,6 @@ const LoginForm = () => {
     setupNonce();
   }, [handleGoogleSignIn]);
 
-  const handleVerify = (token: string) => {
-    setCaptchaToken(token);
-  };
-
   function handleRegister() {
     router.push("/registro");
   }
@@ -113,22 +114,27 @@ const LoginForm = () => {
       return;
     }
 
-    if (!captchaToken) {
-      setError("Please, complete the CAPTCHA.");
-      return;
-    }
-
     try {
       setLoading(true);
-      await login(email, password, captchaToken);
+
+      await new Promise<void>((resolve) => window.grecaptcha.enterprise.ready(resolve));
+      const token = await window.grecaptcha.enterprise.execute(RECAPTCHA_SITE_KEY, { action: "LOGIN" });
+
+      const verify = await fetch('/api/recaptcha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, action: 'LOGIN' }),
+      });
+      if (!verify.ok) {
+        const errData = await verify.json().catch(() => ({}));
+        throw new Error(errData.detail || errData.error || 'Bot verification failed. Please try again.');
+      }
+
+      await login(email, password);
     } catch (err: any) {
-      setError(
-        err.message || "Invalid credentials."
-      );
+      setError(err.message || "Invalid credentials.");
     } finally {
       setLoading(false);
-      captchaRef.current?.resetCaptcha();
-      setCaptchaToken(null);
     }
   };
 
@@ -163,13 +169,13 @@ const LoginForm = () => {
             disabled={loading}
           />
           {emailError && (
-            <span className='absolute bottom-0 animate-fadeInDown text-red-5 00 text-sm'>
+            <span className='absolute bottom-0 animate-fadeInDown text-red-500 text-sm'>
               {emailError}
             </span>
           )}
         </div>
 
-        <div className='grid relative py-2 mb-4'>
+        <div className='grid relative py-2'>
           <label className='pr-4 pb-2' htmlFor='password'>
             <span>Password</span>
           </label>
@@ -191,14 +197,6 @@ const LoginForm = () => {
               {passwordError}
             </span>
           )}
-        </div>
-
-        <div className='pb-4 flex justify-center'>
-          <HCaptcha
-            ref={captchaRef}
-            sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-            onVerify={handleVerify}
-          />
         </div>
 
         <div className='flex my-4'>

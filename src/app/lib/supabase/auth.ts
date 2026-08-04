@@ -6,15 +6,13 @@ export const signup = async (
   email: string,
   password: string,
   username: string,
-  role: Role,
-  captchaToken?: string
+  role: Role
 ): Promise<{ success: true; user: NonNullable<Awaited<ReturnType<typeof supabase.auth.getUser>>['data']['user']> }> => {
   const { data, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
       emailRedirectTo: 'https://theroofingbizbroker.com/',
-      captchaToken,
       data: { username, role },
     },
   });
@@ -29,8 +27,7 @@ export const signup = async (
 
 export const login = async (
   emailOrUsername: string,
-  password: string,
-  captchaToken?: string
+  password: string
 ) => {
   let email = emailOrUsername;
 
@@ -45,7 +42,6 @@ export const login = async (
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
-    options: { captchaToken },
   });
 
   if (error) throw error;
