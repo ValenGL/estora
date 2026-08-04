@@ -20,7 +20,7 @@ const Alert: React.FC<AlertProps> = ({
 }) => {
   return (
     <div
-      className={`alert animate-${animate} u-bgcolor-neutral-${type} ${classNames}`}
+      className={`alert animate-${animate} u-bgcolor-neutral-${type} ${classNames} flex px-4`}
     >
       {closable && (
         <button className='close-btn-modal' onClick={onClose}>

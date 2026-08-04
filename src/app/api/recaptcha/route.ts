@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   console.log('reCAPTCHA assessment:', { valid, score, invalidReason });
 
   if (!valid || score < SCORE_THRESHOLD) {
-    return NextResponse.json({ success: false, score, invalidReason }, { status: 403 });
+    return NextResponse.json({ success: false, score, invalidReason, error: invalidReason || 'Score too low' }, { status: 403 });
   }
 
   return NextResponse.json({ success: true, score });
