@@ -77,3 +77,62 @@
     cursor: not-allowed;
   }
 }
+
+.seller-onboarding-field-row {
+  display: flex;
+  gap: 1rem;
+
+  > .seller-onboarding-field {
+    flex: 1;
+  }
+}
+
+.seller-onboarding-select {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--estora-white, #fafafa);
+  font-size: 0.95rem;
+  cursor: pointer;
+  appearance: none;
+
+  option {
+    background: #1a1a2e;
+    color: var(--estora-white, #fafafa);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--estora-primary, #4A6FA5);
+  }
+}
+
+.seller-onboarding-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.seller-onboarding-radio-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--estora-white, #fafafa);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  text-transform: capitalize;
+
+  &:hover:not(.seller-onboarding-radio-btn--selected) {
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  &--selected {
+    border-color: var(--estora-primary, #4A6FA5);
+    background: rgba(74, 111, 165, 0.2);
+    font-weight: 600;
+  }
+}
