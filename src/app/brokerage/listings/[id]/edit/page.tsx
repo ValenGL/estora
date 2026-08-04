@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { useAuth } from "../../../../utils/isAuth";
 import { getSellerById, updateSeller } from "../../../../lib/supabase/sellers";
@@ -10,7 +10,8 @@ import ListingForm from "../../../../../shared/components/listingForm/listingFor
 import Loader from "../../../../../shared/components/loader/loader";
 import ProtectedRoute from "../../../../utils/protectedRoute";
 
-const EditListingPage = ({ params }: { params: { id: string } }) => {
+const EditListingPage = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = use(params);
   const { effectiveRole } = useAuth();
   const router = useRouter();
   const [seller, setSeller] = useState<Seller | null>(null);
@@ -22,14 +23,14 @@ const EditListingPage = ({ params }: { params: { id: string } }) => {
   }
 
   useEffect(() => {
-    getSellerById(params.id)
+    getSellerById(id)
       .then(setSeller)
       .catch(() => setFetchError('Listing not found.'))
       .finally(() => setLoading(false));
-  }, [params.id]);
+  }, [id]);
 
   const handleSubmit = async (data: BrokerSellerInput) => {
-    await updateSeller(params.id, data);
+    await updateSeller(id, data);
     router.push('/brokerage');
   };
 
