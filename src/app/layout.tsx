@@ -42,7 +42,7 @@ export default function RootLayout({
             crossOrigin='anonymous'
           />
           {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-          <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfEX3QtAAAAAG6arHcjbcMh4aFHPw8IF5ZudC5X" async defer />
+          <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcE5XUtAAAAAN8ifK1vGtE3aLVcjrdk7I9IxOMg" async defer />
         </head>
         <body>
           <AuthProvider>

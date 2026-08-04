@@ -10,7 +10,7 @@ import { useAuth } from "./../../../app/utils/isAuth";
 
 import "./loginForm.scss";
 
-const RECAPTCHA_SITE_KEY = "6LfEX3QtAAAAAG6arHcjbcMh4aFHPw8IF5ZudC5X";
+const RECAPTCHA_SITE_KEY = "6LcE5XUtAAAAAN8ifK1vGtE3aLVcjrdk7I9IxOMg";
 
 declare global {
   interface Window {

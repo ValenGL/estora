@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import { signup } from "./../../../app/lib/supabase/supabase_manage";
 import Button from "./../button/button";
 
-const RECAPTCHA_SITE_KEY = "6LfEX3QtAAAAAG6arHcjbcMh4aFHPw8IF5ZudC5X";
+const RECAPTCHA_SITE_KEY = "6LcE5XUtAAAAAN8ifK1vGtE3aLVcjrdk7I9IxOMg";
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();

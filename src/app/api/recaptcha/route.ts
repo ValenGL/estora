@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const PROJECT_ID = 'brokerage-504502';
-const SITE_KEY = '6LfEX3QtAAAAAG6arHcjbcMh4aFHPw8IF5ZudC5X';
+const SITE_KEY = '6LcE5XUtAAAAAN8ifK1vGtE3aLVcjrdk7I9IxOMg';
 const SCORE_THRESHOLD = 0.5;
 
 export async function POST(req: NextRequest) {
