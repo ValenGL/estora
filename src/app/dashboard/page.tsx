@@ -4,6 +4,8 @@ import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "../../shared/components/loader/loader";
 import SellerCard from "../../shared/components/sellerCard/sellerCard";
+import ListingFiltersBar from "../../shared/components/listingFilters/listingFilters";
+import { useListingFilters } from "../../shared/hooks/useListingFilters";
 import { getAllSellers, deleteSeller } from "../lib/supabase/sellers";
 import type { Seller } from "../lib/types";
 import { sanitizeForBuyer } from "../lib/utils/sanitize";
@@ -31,7 +33,9 @@ const DashboardPage = () => {
   const isBuyer = effectiveRole === 'buyer';
   const isBroker = effectiveRole === 'broker';
 
-  const displaySellers = isBuyer ? sellers.map(sanitizeForBuyer) : sellers;
+  const { filtered, filters, setFilter, resetFilters, isFiltered } = useListingFilters(sellers);
+
+  const displaySellers = isBuyer ? filtered.map(sanitizeForBuyer) : filtered;
 
   const handleDelete = async (id: string) => {
     try {
@@ -42,15 +46,17 @@ const DashboardPage = () => {
     }
   };
 
+  const countLabel = isFiltered
+    ? `${filtered.length} of ${sellers.length} ${sellers.length === 1 ? 'listing' : 'listings'}`
+    : `${sellers.length} ${sellers.length === 1 ? 'listing' : 'listings'}`;
+
   return (
     <section className="p-4 sm:p-6 animate-fadeInUp">
 
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-3xl font-bold">All Listings</h1>
         {!loading && (
-          <span className="text-sm opacity-60 font-medium">
-            {sellers.length} {sellers.length === 1 ? 'listing' : 'listings'}
-          </span>
+          <span className="text-sm opacity-60 font-medium">{countLabel}</span>
         )}
         {isBroker && (
           <button
@@ -69,14 +75,28 @@ const DashboardPage = () => {
         </div>
       )}
 
+      {!loading && (
+        <ListingFiltersBar
+          filters={filters}
+          setFilter={setFilter}
+          resetFilters={resetFilters}
+          isFiltered={isFiltered}
+          mode={isBuyer ? 'buyer' : 'full'}
+        />
+      )}
+
       {loading && <Loader block />}
       {error && <p className="text-red-400 text-sm">{error}</p>}
+
+      {!loading && !error && filtered.length === 0 && sellers.length > 0 && (
+        <p className="opacity-60">No listings match the current filters.</p>
+      )}
 
       {!loading && !error && sellers.length === 0 && (
         <p className="opacity-60">No listings available yet.</p>
       )}
 
-      {!loading && !error && sellers.length > 0 && (
+      {!loading && !error && filtered.length > 0 && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {displaySellers.map((seller) => (
             <SellerCard
