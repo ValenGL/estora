@@ -55,6 +55,17 @@ export default function Menu() {
             </Link>
           </li>
         )}
+        {effectiveRole === 'broker' && (
+          <li>
+            <Link
+              className={`link ${pathname === "/brokerage/match" ? "active" : ""}`}
+              href='/brokerage/match'
+              onClick={() => setIsOpen(false)}
+            >
+              Match
+            </Link>
+          </li>
+        )}
         <li>
           <Link
             className={`link ${pathname === "/buyer" ? "active" : ""}`}
