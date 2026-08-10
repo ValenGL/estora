@@ -17,16 +17,29 @@ const MatchPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  if (effectiveRole !== 'broker' && effectiveRole !== null) {
+  // Role is still loading — do not fetch or redirect yet.
+  // Role is confirmed non-broker — redirect.
+  // Role is confirmed broker — proceed to fetch below.
+  if (effectiveRole !== null && effectiveRole !== 'broker') {
     redirect('/inicio');
   }
 
   useEffect(() => {
+    // Only fetch when the role is confirmed as broker.
+    // When effectiveRole is null (still loading) this block is skipped,
+    // preventing seller-identifying data from leaking to non-broker users.
+    if (effectiveRole !== 'broker') return;
+
     Promise.all([getAllBuyers(), getAllSellers()])
       .then(([b, s]) => { setBuyers(b); setSellers(s); })
       .catch(() => setError('Failed to load data. Please refresh.'))
       .finally(() => setLoading(false));
-  }, []);
+  }, [effectiveRole]);
+
+  // While role is being resolved, show loader with no data fetched.
+  if (effectiveRole === null) {
+    return <Loader block />;
+  }
 
   return (
     <section className="p-4 sm:p-6 animate-fadeInUp" style={{ height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'column' }}>

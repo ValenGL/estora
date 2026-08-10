@@ -264,4 +264,27 @@
 
 .match-print-header {
   display: none;
+
+  h2 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.match-print-anchor {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin-bottom: 0.2rem;
+}
+
+.match-print-weight-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  opacity: 0.75;
+
+  li {
+    padding: 0.1rem 0;
+  }
 }

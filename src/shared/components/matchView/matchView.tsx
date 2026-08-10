@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import type { Buyer, Seller, MatchWeights, MatchDimension } from '../../../app/lib/types';
-import { DEFAULT_WEIGHTS, scoreAllSellers, scoreAllBuyers } from '../../../app/lib/utils/matching';
+import { DEFAULT_WEIGHTS, DIMENSION_LABELS, scoreAllSellers, scoreAllBuyers } from '../../../app/lib/utils/matching';
 import MatchSidebar from './matchSidebar';
 import MatchPanel from './matchPanel';
 import './matchView.scss';
@@ -51,13 +51,35 @@ export default function MatchView({ buyers, sellers }: MatchViewProps) {
     }
   }, [pivot, anchorId, buyers, sellers, weights, dealbreakers]);
 
+  const anchorName = useMemo(() => {
+    if (anchorId === null) return 'No anchor selected.';
+    if (pivot === 'buyer-first') {
+      const buyer = buyers.find((b) => b.id === anchorId);
+      return buyer ? buyer.organization_name : 'No anchor selected.';
+    }
+    const seller = sellers.find((s) => s.id === anchorId);
+    return seller ? seller.company_name : 'No anchor selected.';
+  }, [pivot, anchorId, buyers, sellers]);
+
   return (
     <div className="match-view">
       <div className="match-print-header">
-        <h2 style={{ fontWeight: 700, marginBottom: '0.25rem' }}>Match Report</h2>
-        <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>
-          {new Date().toLocaleString()} — {pivot === 'buyer-first' ? 'Buyer-first' : 'Seller-first'}
+        <h2>Match Report</h2>
+        <p className="match-print-anchor">
+          {pivot === 'buyer-first' ? 'Buyer-first' : 'Seller-first'} — {anchorName}
         </p>
+        <p className="match-print-anchor">
+          {new Date().toLocaleString()}
+        </p>
+        <p className="match-print-anchor">Weight configuration:</p>
+        <ul className="match-print-weight-list">
+          {(Object.keys(DIMENSION_LABELS) as MatchDimension[]).map((dim) => (
+            <li key={dim}>
+              {DIMENSION_LABELS[dim]}: {weights[dim]}
+              {dealbreakers.has(dim) ? ' (dealbreaker)' : ''}
+            </li>
+          ))}
+        </ul>
       </div>
       <MatchSidebar
         weights={weights}
