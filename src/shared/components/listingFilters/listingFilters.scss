@@ -1,0 +1,87 @@
+.listing-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.listing-filters-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.listing-filters-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+}
+
+.listing-filters-select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.625rem;
+  font-size: 0.8125rem;
+  color: inherit;
+  cursor: pointer;
+  min-width: 7rem;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.listing-filters-range {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.listing-filters-input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.8125rem;
+  color: inherit;
+  width: 5rem;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  &::placeholder {
+    opacity: 0.35;
+  }
+}
+
+.listing-filters-sep {
+  opacity: 0.3;
+  font-size: 0.75rem;
+}
+
+.listing-filters-clear {
+  padding: 0.375rem 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  margin-left: auto;
+  align-self: flex-end;
+  transition: opacity 0.15s, border-color 0.15s;
+
+  &:hover {
+    opacity: 1;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+}
