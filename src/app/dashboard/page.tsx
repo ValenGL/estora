@@ -1,7 +1,7 @@
 "use client";
 
 import { redirect, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Loader from "../../shared/components/loader/loader";
 import SellerCard from "../../shared/components/sellerCard/sellerCard";
 import ListingFiltersBar from "../../shared/components/listingFilters/listingFilters";
@@ -35,7 +35,14 @@ const DashboardPage = () => {
 
   const { filtered, filters, setFilter, resetFilters, isFiltered } = useListingFilters(sellers);
 
-  const displaySellers = isBuyer ? filtered.map(sanitizeForBuyer) : filtered;
+  const stableIndexMap = useMemo(
+    () => new Map(sellers.map((s, i) => [s.id, i])),
+    [sellers]
+  );
+
+  const displaySellers = isBuyer
+    ? filtered.map((s) => sanitizeForBuyer(s, stableIndexMap.get(s.id) ?? 0))
+    : filtered;
 
   const handleDelete = async (id: string) => {
     try {

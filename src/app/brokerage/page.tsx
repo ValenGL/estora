@@ -110,7 +110,7 @@ const BrokeragePage = () => {
         <p className="opacity-60">No listings match the current filters.</p>
       )}
 
-      {!loading && filtered.length > 0 && (
+      {!loading && !error && filtered.length > 0 && (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
