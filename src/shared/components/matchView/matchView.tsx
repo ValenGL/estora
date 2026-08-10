@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import type { Buyer, Seller, MatchWeights, MatchDimension } from '../../../app/lib/types';
-import { DEFAULT_WEIGHTS, DIMENSION_LABELS, scoreAllSellers, scoreAllBuyers } from '../../../app/lib/utils/matching';
+import { DEFAULT_WEIGHTS, DIMENSION_LABELS, scoreAllSellers, scoreAllBuyers, scorePair } from '../../../app/lib/utils/matching';
 import MatchSidebar from './matchSidebar';
 import MatchPanel from './matchPanel';
 import './matchView.scss';
@@ -51,6 +51,27 @@ export default function MatchView({ buyers, sellers }: MatchViewProps) {
     }
   }, [pivot, anchorId, buyers, sellers, weights, dealbreakers]);
 
+  // Average score for each picker entity against all counterparts — drives picker sort + % display
+  const pickerScores = useMemo(() => {
+    const map = new Map<string, number | null>();
+    if (pivot === 'buyer-first') {
+      buyers.forEach((buyer) => {
+        const scored = sellers
+          .map((seller) => scorePair(buyer, seller, weights, dealbreakers).score)
+          .filter((s): s is number => s !== null);
+        map.set(buyer.id, scored.length ? Math.round(scored.reduce((a, b) => a + b, 0) / scored.length) : null);
+      });
+    } else {
+      sellers.forEach((seller) => {
+        const scored = buyers
+          .map((buyer) => scorePair(buyer, seller, weights, dealbreakers).score)
+          .filter((s): s is number => s !== null);
+        map.set(seller.id, scored.length ? Math.round(scored.reduce((a, b) => a + b, 0) / scored.length) : null);
+      });
+    }
+    return map;
+  }, [pivot, buyers, sellers, weights, dealbreakers]);
+
   const anchorName = useMemo(() => {
     if (anchorId === null) return 'No anchor selected.';
     if (pivot === 'buyer-first') {
@@ -82,6 +103,8 @@ export default function MatchView({ buyers, sellers }: MatchViewProps) {
         </ul>
       </div>
       <MatchSidebar
+        pivot={pivot}
+        onPivotChange={handlePivotChange}
         weights={weights}
         onWeightChange={handleWeightChange}
         dealbreakers={dealbreakers}
@@ -90,12 +113,12 @@ export default function MatchView({ buyers, sellers }: MatchViewProps) {
       />
       <MatchPanel
         pivot={pivot}
-        onPivotChange={handlePivotChange}
         buyers={buyers}
         sellers={sellers}
         anchorId={anchorId}
         onAnchorChange={setAnchorId}
         results={results}
+        pickerScores={pickerScores}
       />
     </div>
   );

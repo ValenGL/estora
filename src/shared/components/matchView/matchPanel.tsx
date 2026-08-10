@@ -7,47 +7,37 @@ type PivotMode = 'buyer-first' | 'seller-first';
 
 interface MatchPanelProps {
   pivot: PivotMode;
-  onPivotChange: (mode: PivotMode) => void;
   buyers: Buyer[];
   sellers: Seller[];
   anchorId: string | null;
   onAnchorChange: (id: string) => void;
   results: SellerMatchResult[] | BuyerMatchResult[];
+  pickerScores: Map<string, number | null>;
 }
 
 export default function MatchPanel({
   pivot,
-  onPivotChange,
   buyers,
   sellers,
   anchorId,
   onAnchorChange,
   results,
+  pickerScores,
 }: MatchPanelProps) {
   const isBuyerFirst = pivot === 'buyer-first';
-  const pickerItems: { id: string; label: string }[] = isBuyerFirst
-    ? buyers.map((b) => ({ id: b.id, label: b.organization_name }))
-    : sellers.map((s) => ({ id: s.id, label: s.company_name }));
+
+  const pickerItems = (isBuyerFirst
+    ? buyers.map((b) => ({ id: b.id, label: b.organization_name, score: pickerScores.get(b.id) ?? null }))
+    : sellers.map((s) => ({ id: s.id, label: s.company_name, score: pickerScores.get(s.id) ?? null }))
+  ).sort((a, b) => {
+    if (a.score === null && b.score === null) return 0;
+    if (a.score === null) return 1;
+    if (b.score === null) return -1;
+    return b.score - a.score;
+  });
 
   return (
     <div className="match-panel">
-      <div className="match-panel-header">
-        <button
-          type="button"
-          className={`match-pivot-btn${isBuyerFirst ? ' match-pivot-btn--active' : ''}`}
-          onClick={() => onPivotChange('buyer-first')}
-        >
-          Buyer-first
-        </button>
-        <button
-          type="button"
-          className={`match-pivot-btn${!isBuyerFirst ? ' match-pivot-btn--active' : ''}`}
-          onClick={() => onPivotChange('seller-first')}
-        >
-          Seller-first
-        </button>
-      </div>
-
       <div className="match-columns">
         <div className="match-picker">
           {pickerItems.length === 0 && (
@@ -60,7 +50,10 @@ export default function MatchPanel({
               className={`match-picker-item${anchorId === item.id ? ' match-picker-item--selected' : ''}`}
               onClick={() => onAnchorChange(item.id)}
             >
-              {item.label}
+              <span className="match-picker-label">{item.label}</span>
+              <span className={`match-picker-score${item.score !== null && item.score >= 70 ? ' match-picker-score--high' : item.score !== null && item.score >= 40 ? ' match-picker-score--mid' : item.score !== null ? ' match-picker-score--low' : ''}`}>
+                {item.score !== null ? `${item.score}%` : '—'}
+              </span>
             </button>
           ))}
         </div>

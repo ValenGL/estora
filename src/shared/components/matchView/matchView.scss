@@ -30,6 +30,11 @@
   opacity: 0.45;
 }
 
+.match-pivot-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .match-dimension-row {
   display: flex;
   flex-direction: column;
@@ -45,6 +50,11 @@
 
 .match-dimension-name {
   opacity: 0.8;
+
+  &--breaker {
+    color: #f87171;
+    opacity: 1;
+  }
 }
 
 .match-dimension-value {
@@ -53,27 +63,24 @@
   opacity: 0.6;
 }
 
+.match-dimension-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .match-weight-slider {
-  width: 100%;
+  flex: 1;
   accent-color: #6366f1;
   cursor: pointer;
 }
 
-.match-dealbreaker-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
+.match-dimension-dealbreaker {
+  flex-shrink: 0;
+  accent-color: #ef4444;
   cursor: pointer;
-
-  input[type='checkbox'] {
-    accent-color: #ef4444;
-    cursor: pointer;
-  }
-
-  &--active {
-    color: #f87171;
-  }
+  width: 14px;
+  height: 14px;
 }
 
 .match-print-btn {
@@ -145,12 +152,17 @@
 }
 
 .match-picker-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   font-size: 0.8rem;
   cursor: pointer;
   transition: background 0.1s;
   border: 1px solid transparent;
+  text-align: left;
 
   &:hover {
     background: rgba(255, 255, 255, 0.06);
@@ -161,6 +173,25 @@
     border-color: rgba(99, 102, 241, 0.4);
     font-weight: 600;
   }
+}
+
+.match-picker-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.match-picker-score {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.5;
+
+  &--high { color: #4ade80; opacity: 1; }
+  &--mid  { color: #facc15; opacity: 1; }
+  &--low  { color: #f87171; opacity: 1; }
 }
 
 .match-list {
