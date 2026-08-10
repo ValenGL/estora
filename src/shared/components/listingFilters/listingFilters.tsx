@@ -22,19 +22,21 @@ export default function ListingFiltersBar({
   return (
     <div className="listing-filters">
 
-      <div className="listing-filters-group">
-        <span className="listing-filters-label">State</span>
-        <select
-          className="listing-filters-select"
-          value={filters.state}
-          onChange={(e) => setFilter('state', e.target.value)}
-        >
-          <option value="">All states</option>
-          {US_STATES.map((s) => (
-            <option key={s.code} value={s.code}>{s.label}</option>
-          ))}
-        </select>
-      </div>
+      {mode === 'full' && (
+        <div className="listing-filters-group">
+          <span className="listing-filters-label">State</span>
+          <select
+            className="listing-filters-select"
+            value={filters.state}
+            onChange={(e) => setFilter('state', e.target.value)}
+          >
+            <option value="">All states</option>
+            {US_STATES.map((s) => (
+              <option key={s.code} value={s.code}>{s.label}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="listing-filters-group">
         <span className="listing-filters-label">Status</span>

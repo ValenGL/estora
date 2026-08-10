@@ -14,5 +14,6 @@ export function sanitizeForBuyer(seller: Seller, index: number): Seller {
     management_type: null,
     phone: null,
     website: null,
+    state: null,
   };
 }
