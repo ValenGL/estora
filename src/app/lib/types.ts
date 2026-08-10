@@ -67,3 +67,36 @@ export interface BrokerEvent {
   metadata: Record<string, unknown> | null;
   created_at: string;
 }
+
+export type MatchDimension =
+  | 'revenue'
+  | 'ebitda'
+  | 'geography'
+  | 'businessType'
+  | 'workType'
+  | 'employeeCount'
+  | 'software'
+  | 'managementPreference';
+
+export interface MatchWeights {
+  revenue: number;
+  ebitda: number;
+  geography: number;
+  businessType: number;
+  workType: number;
+  employeeCount: number;
+  software: number;
+  managementPreference: number;
+}
+
+export interface SellerMatchResult {
+  seller: Seller;
+  score: number | null;
+  breakdown: Record<MatchDimension, number | null>;
+}
+
+export interface BuyerMatchResult {
+  buyer: Buyer;
+  score: number | null;
+  breakdown: Record<MatchDimension, number | null>;
+}
