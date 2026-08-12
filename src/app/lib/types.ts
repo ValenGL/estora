@@ -89,14 +89,15 @@ export interface MatchWeights {
   managementPreference: number;
 }
 
-export interface SellerMatchResult {
+export interface MatchPairResult {
+  pivot: 'buyer-first' | 'seller-first';
+  buyer: Buyer;
   seller: Seller;
   score: number | null;
   breakdown: Record<MatchDimension, number | null>;
 }
 
-export interface BuyerMatchResult {
-  buyer: Buyer;
-  score: number | null;
-  breakdown: Record<MatchDimension, number | null>;
-}
+/** @deprecated use MatchPairResult */
+export type SellerMatchResult = MatchPairResult;
+/** @deprecated use MatchPairResult */
+export type BuyerMatchResult = MatchPairResult;

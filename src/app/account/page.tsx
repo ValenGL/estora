@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../utils/isAuth";
 import { supabase } from "../lib/supabase/supabase";
 import { getOwnSeller, updateSeller } from "../lib/supabase/sellers";
+import { normalizeUrl } from "../lib/utils/sanitize";
 import { getOwnBuyer, updateBuyer } from "../lib/supabase/buyers";
 import { logProfileUpdate, getProfileHistory } from "../lib/supabase/events";
 import { US_STATES } from "../lib/data/usStates";
@@ -271,7 +272,7 @@ function SellerSection({
       const parsedEmployees = parseInt(form.employee_count, 10);
       const parsedYears = parseInt(form.years_in_business, 10);
       const trimmedPhone = form.phone.trim() || null;
-      const trimmedWebsite = form.website.trim() || null;
+      const trimmedWebsite = normalizeUrl(form.website);
 
       const changes: { field: string; old: unknown; new: unknown }[] = [];
       if (seller.company_name !== form.company_name.trim())
@@ -601,7 +602,7 @@ function SellerSection({
             <label htmlFor="website">Website</label>
             <input
               id="website"
-              type="url"
+              type="text"
               value={form.website}
               onChange={setField("website")}
               disabled={saving}

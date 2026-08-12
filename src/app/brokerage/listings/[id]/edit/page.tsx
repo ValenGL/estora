@@ -1,13 +1,13 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
-import { useAuth } from "../../../../utils/isAuth";
-import { getSellerById, updateSeller } from "../../../../lib/supabase/sellers";
-import type { Seller } from "../../../../lib/types";
-import type { BrokerSellerInput } from "../../../../lib/supabase/brokerSellers";
+import { use, useEffect, useState } from "react";
 import ListingForm from "../../../../../shared/components/listingForm/listingForm";
 import Loader from "../../../../../shared/components/loader/loader";
+import type { BrokerSellerInput } from "../../../../lib/supabase/brokerSellers";
+import { getSellerById, updateSeller } from "../../../../lib/supabase/sellers";
+import type { Seller } from "../../../../lib/types";
+import { useAuth } from "../../../../utils/isAuth";
 import ProtectedRoute from "../../../../utils/protectedRoute";
 
 const EditListingPage = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -38,7 +38,7 @@ const EditListingPage = ({ params }: { params: Promise<{ id: string }> }) => {
   if (fetchError || !seller) return <p className="p-6 text-red-400">{fetchError ?? 'Listing not found.'}</p>;
 
   return (
-    <section className="p-4 sm:p-6 animate-fadeInUp">
+    <section className="ph-4 sm:ph-6 animate-fadeInUp">
       <h1 className="text-3xl font-bold mb-6">Edit listing</h1>
       <ListingForm
         initialValues={{

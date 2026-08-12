@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { BrokerSellerInput } from "../../../app/lib/supabase/brokerSellers";
 import type { BusinessType, WorkType, ManagementType, SellerStatus } from "../../../app/lib/types";
 import { US_STATES } from "../../../app/lib/data/usStates";
+import { normalizeUrl } from "../../../app/lib/utils/sanitize";
 import "./listingForm.scss";
 
 interface ListingFormProps {
@@ -97,7 +98,7 @@ export default function ListingForm({ initialValues, onSubmit, submitLabel, onCa
         management_type: form.management_type as ManagementType,
         status: form.status as SellerStatus,
         phone: form.phone.trim() || null,
-        website: form.website.trim() || null,
+        website: normalizeUrl(form.website),
       });
     } catch {
       setError("Failed to save. Please try again.");
@@ -215,7 +216,7 @@ export default function ListingForm({ initialValues, onSubmit, submitLabel, onCa
         </div>
         <div className="listing-form-field">
           <label htmlFor="website">Website</label>
-          <input id="website" type="url" value={form.website} onChange={set("website")} disabled={submitting} />
+          <input id="website" type="text" value={form.website} onChange={set("website")} disabled={submitting} />
         </div>
       </div>
 

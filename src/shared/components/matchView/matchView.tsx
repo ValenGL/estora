@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import type { Buyer, Seller, MatchWeights, MatchDimension } from '../../../app/lib/types';
-import { DEFAULT_WEIGHTS, DIMENSION_LABELS, scoreAllSellers, scoreAllBuyers, scorePair } from '../../../app/lib/utils/matching';
+import type { Buyer, Seller, MatchWeights, MatchDimension, MatchPairResult } from '../../../app/lib/types';
+import { DEFAULT_WEIGHTS, DIMENSION_LABELS, scoreAllSellers, scoreAllBuyers, scorePair, sortByScore } from '../../../app/lib/utils/matching';
 import MatchSidebar from './matchSidebar';
 import MatchPanel from './matchPanel';
 import './matchView.scss';
@@ -37,21 +37,25 @@ export default function MatchView({ buyers, sellers }: MatchViewProps) {
     setAnchorId(null);
   };
 
-  const results = useMemo(() => {
-    if (anchorId === null) return [];
-
+  const results = useMemo((): MatchPairResult[] => {
     if (pivot === 'buyer-first') {
-      const buyer = buyers.find((b) => b.id === anchorId);
-      if (!buyer) return [];
-      return scoreAllSellers(buyer, sellers, weights, dealbreakers);
+      const anchors = anchorId ? buyers.filter((b) => b.id === anchorId) : buyers;
+      return sortByScore(
+        anchors.flatMap((buyer) =>
+          sellers.map((seller) => ({ pivot: 'buyer-first' as const, buyer, seller, ...scorePair(buyer, seller, weights, dealbreakers) }))
+        )
+      );
     } else {
-      const seller = sellers.find((s) => s.id === anchorId);
-      if (!seller) return [];
-      return scoreAllBuyers(seller, buyers, weights, dealbreakers);
+      const anchors = anchorId ? sellers.filter((s) => s.id === anchorId) : sellers;
+      return sortByScore(
+        anchors.flatMap((seller) =>
+          buyers.map((buyer) => ({ pivot: 'seller-first' as const, seller, buyer, ...scorePair(buyer, seller, weights, dealbreakers) }))
+        )
+      );
     }
   }, [pivot, anchorId, buyers, sellers, weights, dealbreakers]);
 
-  // Average score for each picker entity against all counterparts — drives picker sort + % display
+  // Max score for each picker entity against all counterparts — drives picker sort + % display
   const pickerScores = useMemo(() => {
     const map = new Map<string, number | null>();
     if (pivot === 'buyer-first') {
@@ -59,14 +63,14 @@ export default function MatchView({ buyers, sellers }: MatchViewProps) {
         const scored = sellers
           .map((seller) => scorePair(buyer, seller, weights, dealbreakers).score)
           .filter((s): s is number => s !== null);
-        map.set(buyer.id, scored.length ? Math.round(scored.reduce((a, b) => a + b, 0) / scored.length) : null);
+        map.set(buyer.id, scored.length ? Math.max(...scored) : null);
       });
     } else {
       sellers.forEach((seller) => {
         const scored = buyers
           .map((buyer) => scorePair(buyer, seller, weights, dealbreakers).score)
           .filter((s): s is number => s !== null);
-        map.set(seller.id, scored.length ? Math.round(scored.reduce((a, b) => a + b, 0) / scored.length) : null);
+        map.set(seller.id, scored.length ? Math.max(...scored) : null);
       });
     }
     return map;
@@ -109,17 +113,14 @@ export default function MatchView({ buyers, sellers }: MatchViewProps) {
         onWeightChange={handleWeightChange}
         dealbreakers={dealbreakers}
         onDealbreakersChange={handleDealbreakersChange}
-        onPrint={() => window.print()}
-      />
-      <MatchPanel
-        pivot={pivot}
         buyers={buyers}
         sellers={sellers}
         anchorId={anchorId}
         onAnchorChange={setAnchorId}
-        results={results}
         pickerScores={pickerScores}
+        onPrint={() => window.print()}
       />
+      <MatchPanel results={results} />
     </div>
   );
 }

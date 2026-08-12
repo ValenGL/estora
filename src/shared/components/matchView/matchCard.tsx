@@ -1,9 +1,9 @@
 "use client";
 
-import type { SellerMatchResult, BuyerMatchResult, MatchDimension } from '../../../app/lib/types';
+import type { MatchPairResult, MatchDimension } from '../../../app/lib/types';
 import { DIMENSION_LABELS } from '../../../app/lib/utils/matching';
 
-type Props = { result: SellerMatchResult | BuyerMatchResult };
+type Props = { result: MatchPairResult };
 
 function formatMoney(n: number | null): string {
   if (n === null) return '—';
@@ -32,39 +32,35 @@ function formatRaw(raw: number | null): string {
 }
 
 export default function MatchCard({ result }: Props) {
-  const isSeller = 'seller' in result;
-  const { score, breakdown } = result;
+  const { pivot, buyer, seller, score, breakdown } = result;
+  const isBuyerFirst = pivot === 'buyer-first';
 
-  const name = isSeller
-    ? (result as SellerMatchResult).seller.company_name
-    : (result as BuyerMatchResult).buyer.organization_name;
+  const primaryName = isBuyerFirst ? seller.company_name : buyer.organization_name;
+  const anchorName = isBuyerFirst ? buyer.organization_name : seller.company_name;
 
-  const meta = isSeller
-    ? (() => {
-        const s = (result as SellerMatchResult).seller;
-        return [
-          { label: 'Revenue', value: formatMoney(s.annual_revenue) },
-          { label: 'EBITDA', value: formatMoney(s.ebitda) },
-          { label: 'State', value: s.state ?? '—' },
-          { label: 'Employees', value: s.employee_count != null ? String(s.employee_count) : '—' },
-        ];
-      })()
-    : (() => {
-        const b = (result as BuyerMatchResult).buyer;
-        return [
-          { label: 'Revenue', value: `${formatMoney(b.revenue_min)}–${formatMoney(b.revenue_max)}` },
-          { label: 'EBITDA', value: `${formatMoney(b.ebitda_min)}–${formatMoney(b.ebitda_max)}` },
-          { label: 'States', value: b.target_states?.join(', ') ?? 'Any' },
-          { label: 'Employees', value: b.employee_min != null ? `${b.employee_min}–${b.employee_max ?? '∞'}` : 'Any' },
-        ];
-      })();
+  const meta = isBuyerFirst
+    ? [
+        { label: 'Revenue', value: formatMoney(seller.annual_revenue) },
+        { label: 'EBITDA', value: formatMoney(seller.ebitda) },
+        { label: 'State', value: seller.state ?? '—' },
+        { label: 'Employees', value: seller.employee_count != null ? String(seller.employee_count) : '—' },
+      ]
+    : [
+        { label: 'Revenue', value: `${formatMoney(buyer.revenue_min)}–${formatMoney(buyer.revenue_max)}` },
+        { label: 'EBITDA', value: `${formatMoney(buyer.ebitda_min)}–${formatMoney(buyer.ebitda_max)}` },
+        { label: 'States', value: buyer.target_states?.join(', ') ?? 'Any' },
+        { label: 'Employees', value: buyer.employee_min != null ? `${buyer.employee_min}–${buyer.employee_max ?? '∞'}` : 'Any' },
+      ];
 
   const dims = Object.keys(breakdown) as MatchDimension[];
 
   return (
     <div className="match-card">
       <div className="match-card-header">
-        <span className="match-card-name">{name}</span>
+        <div className="match-card-names">
+          <span className="match-card-name">{primaryName}</span>
+          <span className="match-card-anchor">vs. {anchorName}</span>
+        </div>
         <span className={`match-card-score ${scoreColorClass(score, 'match-card-score')}`}>
           {score !== null ? score : 'Insufficient data'}
         </span>

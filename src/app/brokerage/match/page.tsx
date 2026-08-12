@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
-import { useAuth } from '../../utils/isAuth';
+import { useEffect, useState } from 'react';
+import Loader from '../../../shared/components/loader/loader';
+import MatchView from '../../../shared/components/matchView/matchView';
 import { getAllBuyers } from '../../lib/supabase/buyers';
 import { getAllSellers } from '../../lib/supabase/sellers';
 import type { Buyer, Seller } from '../../lib/types';
-import MatchView from '../../../shared/components/matchView/matchView';
-import Loader from '../../../shared/components/loader/loader';
+import { useAuth } from '../../utils/isAuth';
 import ProtectedRoute from '../../utils/protectedRoute';
 
 const MatchPage = () => {
@@ -42,7 +42,7 @@ const MatchPage = () => {
   }
 
   return (
-    <section className="p-4 sm:p-6 animate-fadeInUp" style={{ height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'column' }}>
+    <section className="ph-4 sm:ph-6 animate-fadeInUp" style={{ height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'column' }}>
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-3xl font-bold">Match</h1>
         {!loading && (

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AssessmentStep from "../../../shared/components/assessmentStep/assessmentStep";
 import AssessmentResults from "../../../shared/components/assessmentResults/assessmentResults";
 import { createSellerProfile, getOwnSeller } from "../../lib/supabase/sellers";
+import { normalizeUrl } from "../../lib/utils/sanitize";
 import { ASSESSMENT_CATEGORIES } from "../../lib/data/sellerAssessment";
 import { US_STATES } from "../../lib/data/usStates";
 import type { BusinessType, WorkType, ManagementType } from "../../lib/types";
@@ -83,7 +84,7 @@ const SellerOnboardingPage = () => {
         annual_revenue: parseFloat(form.annual_revenue) * 1_000_000,
         ebitda: parseFloat(form.ebitda) * 100_000,
         phone: form.phone || null,
-        website: form.website || null,
+        website: normalizeUrl(form.website),
         state: form.state,
         employee_count: parseInt(form.employee_count, 10),
         years_in_business: parseInt(form.years_in_business, 10),
@@ -325,10 +326,10 @@ const SellerOnboardingPage = () => {
             <input
               id="website"
               name="website"
-              type="url"
+              type="text"
               value={form.website}
               onChange={handleFormChange}
-              placeholder="https://yourbusiness.com"
+              placeholder="yourbusiness.com"
               disabled={submitLoading}
             />
           </div>

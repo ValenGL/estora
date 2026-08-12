@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
-import { useAuth } from "../utils/isAuth";
-import { getAllSellers, deleteSeller } from "../lib/supabase/sellers";
-import type { Seller } from "../lib/types";
-import Loader from "../../shared/components/loader/loader";
+import { useEffect, useState } from "react";
 import ListingFiltersBar from "../../shared/components/listingFilters/listingFilters";
+import Loader from "../../shared/components/loader/loader";
 import { useListingFilters } from "../../shared/hooks/useListingFilters";
+import { deleteSeller, getAllSellers } from "../lib/supabase/sellers";
+import type { Seller } from "../lib/types";
+import { useAuth } from "../utils/isAuth";
 import ProtectedRoute from "../utils/protectedRoute";
 
 function formatMoney(n: number | null): string {
@@ -68,7 +68,7 @@ const BrokeragePage = () => {
     : `${sellers.length} ${sellers.length === 1 ? 'listing' : 'listings'}`;
 
   return (
-    <section className="p-4 sm:p-6 animate-fadeInUp">
+    <section className="ph-4 sm:ph-6 animate-fadeInUp">
 
       <div className="flex items-center gap-3 mb-6">
         <h1 className="text-3xl font-bold">Listings</h1>

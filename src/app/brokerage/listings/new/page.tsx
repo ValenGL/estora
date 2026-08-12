@@ -1,10 +1,10 @@
 "use client";
 
 import { redirect, useRouter } from "next/navigation";
-import { useAuth } from "../../../utils/isAuth";
 import ListingForm from "../../../../shared/components/listingForm/listingForm";
-import { createSellerAsBroker } from "../../../lib/supabase/brokerSellers";
 import type { BrokerSellerInput } from "../../../lib/supabase/brokerSellers";
+import { createSellerAsBroker } from "../../../lib/supabase/brokerSellers";
+import { useAuth } from "../../../utils/isAuth";
 import ProtectedRoute from "../../../utils/protectedRoute";
 
 const NewListingPage = () => {
@@ -21,7 +21,7 @@ const NewListingPage = () => {
   };
 
   return (
-    <section className="p-4 sm:p-6 animate-fadeInUp">
+    <section className="ph-4 sm:ph-6 animate-fadeInUp">
       <h1 className="text-3xl font-bold mb-6">New listing</h1>
       <ListingForm
         submitLabel="Create listing"

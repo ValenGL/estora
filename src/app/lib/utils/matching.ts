@@ -1,6 +1,6 @@
 import type {
   Buyer, Seller, MatchDimension, MatchWeights,
-  SellerMatchResult, BuyerMatchResult,
+  MatchPairResult,
   BusinessType, BuyerBusinessType, WorkType, BuyerWorkType,
   ManagementType, ManagementPreference,
 } from '../types';
@@ -143,8 +143,8 @@ export function scorePair(
   return { score: Math.round((numerator / denominator) * 100), breakdown };
 }
 
-function sortByScore<T extends { score: number | null }>(results: T[]): T[] {
-  return results.sort((a, b) => {
+export function sortByScore<T extends { score: number | null }>(results: T[]): T[] {
+  return [...results].sort((a, b) => {
     if (a.score === null && b.score === null) return 0;
     if (a.score === null) return 1;
     if (b.score === null) return -1;
@@ -157,9 +157,9 @@ export function scoreAllSellers(
   sellers: Seller[],
   weights: MatchWeights,
   dealbreakers: Set<MatchDimension>,
-): SellerMatchResult[] {
+): MatchPairResult[] {
   return sortByScore(
-    sellers.map((seller) => ({ seller, ...scorePair(buyer, seller, weights, dealbreakers) }))
+    sellers.map((seller) => ({ pivot: 'buyer-first' as const, buyer, seller, ...scorePair(buyer, seller, weights, dealbreakers) }))
   );
 }
 
@@ -168,8 +168,8 @@ export function scoreAllBuyers(
   buyers: Buyer[],
   weights: MatchWeights,
   dealbreakers: Set<MatchDimension>,
-): BuyerMatchResult[] {
+): MatchPairResult[] {
   return sortByScore(
-    buyers.map((buyer) => ({ buyer, ...scorePair(buyer, seller, weights, dealbreakers) }))
+    buyers.map((buyer) => ({ pivot: 'seller-first' as const, seller, buyer, ...scorePair(buyer, seller, weights, dealbreakers) }))
   );
 }

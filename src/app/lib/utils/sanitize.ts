@@ -1,5 +1,11 @@
 import type { Seller } from '../types';
 
+export function normalizeUrl(value: string): string | null {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
 export function sanitizeForBuyer(seller: Seller, index: number): Seller {
   return {
     ...seller,
