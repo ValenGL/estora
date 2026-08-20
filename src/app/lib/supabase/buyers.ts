@@ -47,6 +47,18 @@ export const getAllBuyers = async (): Promise<Buyer[]> => {
   return data as Buyer[];
 };
 
+export const getBuyerById = async (id: string): Promise<Buyer | null> => {
+  const { data, error } = await supabase
+    .from('buyers')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error?.code === 'PGRST116') return null;
+  if (error) throw error;
+  return data as Buyer;
+};
+
 export const updateBuyer = async (id: string, updates: BuyerUpdate): Promise<Buyer> => {
   const { data, error } = await supabase
     .from('buyers')

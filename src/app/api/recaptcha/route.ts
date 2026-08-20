@@ -11,6 +11,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'Missing token or action' }, { status: 400 });
   }
 
+  // reCAPTCHA Enterprise rejects localhost — bypass in development
+  if (process.env.NODE_ENV === 'development') {
+    return NextResponse.json({ success: true, score: 1.0, dev: true });
+  }
+
   const apiKey = process.env.RECAPTCHA_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ success: false, error: 'reCAPTCHA not configured' }, { status: 500 });

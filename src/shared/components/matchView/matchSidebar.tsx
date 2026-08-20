@@ -67,6 +67,7 @@ export default function MatchSidebar({
   const [openView, setOpenView] = useState(true);
   const [openPicker, setOpenPicker] = useState(true);
   const [openWeights, setOpenWeights] = useState(true);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const isBuyerFirst = pivot === 'buyer-first';
 
@@ -80,6 +81,9 @@ export default function MatchSidebar({
     return b.score - a.score;
   });
 
+  const visibleItems = pickerItems.slice(0, visibleCount);
+  const remaining = pickerItems.length - visibleCount;
+
   return (
     <aside className="match-sidebar">
 
@@ -90,14 +94,14 @@ export default function MatchSidebar({
             <button
               type="button"
               className={`match-pivot-btn${pivot === 'buyer-first' ? ' match-pivot-btn--active' : ''}`}
-              onClick={() => onPivotChange('buyer-first')}
+              onClick={() => { onPivotChange('buyer-first'); setVisibleCount(10); }}
             >
               Buyer-first
             </button>
             <button
               type="button"
               className={`match-pivot-btn${pivot === 'seller-first' ? ' match-pivot-btn--active' : ''}`}
-              onClick={() => onPivotChange('seller-first')}
+              onClick={() => { onPivotChange('seller-first'); setVisibleCount(10); }}
             >
               Seller-first
             </button>
@@ -106,7 +110,11 @@ export default function MatchSidebar({
       </div>
 
       <div className="match-sidebar-section">
-        <SectionHeader title={<span className="match-sidebar-title">{isBuyerFirst ? 'Buyers' : 'Sellers'}</span>} open={openPicker} onToggle={() => setOpenPicker((v) => !v)} />
+        <SectionHeader
+          title={<span className="match-sidebar-title">{isBuyerFirst ? 'Buyers' : 'Sellers'}</span>}
+          open={openPicker}
+          onToggle={() => { setOpenPicker((v) => !v); setVisibleCount(10); }}
+        />
         {openPicker && (
           <div className="match-picker">
             {pickerItems.length === 0 && (
@@ -114,7 +122,7 @@ export default function MatchSidebar({
                 No {isBuyerFirst ? 'buyers' : 'sellers'} found.
               </span>
             )}
-            {pickerItems.map((item) => (
+            {visibleItems.map((item) => (
               <button
                 key={item.id}
                 type="button"
@@ -127,6 +135,15 @@ export default function MatchSidebar({
                 </span>
               </button>
             ))}
+            {remaining > 0 && (
+              <button
+                type="button"
+                className="match-picker-load-more"
+                onClick={() => setVisibleCount((c) => c + 10)}
+              >
+                · · · Load more ({remaining} remaining)
+              </button>
+            )}
           </div>
         )}
       </div>

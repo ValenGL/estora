@@ -279,6 +279,24 @@
   }
 }
 
+.match-picker-load-more {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  font-size: 0.72rem;
+  opacity: 0.45;
+  background: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .match-list {
   display: flex;
   flex-direction: column;
