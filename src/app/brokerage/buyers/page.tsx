@@ -1,7 +1,7 @@
 "use client";
 
 import { redirect, useRouter } from "next/navigation";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Loader from "../../../shared/components/loader/loader";
 import { useBuyerFilters } from "../../../shared/hooks/useBuyerFilters";
 import { getAllBuyers } from "../../lib/supabase/buyers";
@@ -208,7 +208,7 @@ const BuyersPage = () => {
             </table>
           </div>
 
-          <div className="flex items-center justify-between mt-4 text-sm">
+          <div className="flex items-center justify-between my-4 text-sm">
             <div className="flex items-center gap-2 opacity-60">
               <span>Show</span>
               {PAGE_SIZE_OPTIONS.map((size) => (
