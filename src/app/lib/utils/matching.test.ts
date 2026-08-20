@@ -30,6 +30,9 @@ const baseBuyer: Buyer = {
   target_states: ['TX', 'FL'], business_type: 'residential',
   work_type: 'retail', employee_min: 10, employee_max: 25,
   preferred_software: 'acculynx', management_preference: 'owner_operated',
+  external_id: null, buyer_category: null, source: 'onboarding', imported_by: null,
+  roofing_qualified: null, engagement_level: null, buyer_status: null,
+  investment_thesis: null, hq_state: null, website: null,
   created_at: '', updated_at: '',
 };
 

@@ -1,7 +1,11 @@
 import { supabase } from './supabase';
 import type { Buyer } from '../types';
 
-type BuyerInput = Omit<Buyer, 'id' | 'profile_id' | 'created_at' | 'updated_at'>;
+type BuyerImportFields = 'external_id' | 'buyer_category' | 'source' | 'imported_by' |
+  'roofing_qualified' | 'engagement_level' | 'buyer_status' | 'investment_thesis' |
+  'hq_state' | 'website';
+
+type BuyerInput = Omit<Buyer, 'id' | 'profile_id' | 'created_at' | 'updated_at' | BuyerImportFields>;
 type BuyerUpdate = Partial<Omit<Buyer, 'id' | 'profile_id' | 'created_at' | 'updated_at'>>;
 
 export const createBuyer = async (data: BuyerInput): Promise<Buyer> => {

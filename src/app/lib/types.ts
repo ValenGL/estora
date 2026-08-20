@@ -39,9 +39,11 @@ export interface Seller {
   updated_at: string;
 }
 
+export type BuyerSource = 'onboarding' | 'first_migration';
+
 export interface Buyer {
   id: string;
-  profile_id: string;
+  profile_id: string | null;
   organization_name: string;
   revenue_min: number | null;
   revenue_max: number | null;
@@ -54,6 +56,17 @@ export interface Buyer {
   employee_max: number | null;
   preferred_software: string | null;
   management_preference: ManagementPreference | null;
+  // Import metadata
+  external_id: string | null;
+  buyer_category: string | null;
+  source: BuyerSource;
+  imported_by: string | null;
+  roofing_qualified: string | null;
+  engagement_level: string | null;
+  buyer_status: string | null;
+  investment_thesis: string | null;
+  hq_state: string | null;
+  website: string | null;
   created_at: string;
   updated_at: string;
 }
