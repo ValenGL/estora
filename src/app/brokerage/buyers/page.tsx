@@ -8,6 +8,7 @@ import { getAllBuyers } from "../../lib/supabase/buyers";
 import type { Buyer, BuyerSource } from "../../lib/types";
 import { useAuth } from "../../utils/isAuth";
 import ProtectedRoute from "../../utils/protectedRoute";
+import "../../../shared/components/listingFilters/listingFilters.scss";
 
 function formatMoney(n: number | null): string {
   if (n === null) return '—';
